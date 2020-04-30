@@ -6,10 +6,10 @@ module.exports = {
     ignored: /node_modules/
   },
   mode: "development",
-  entry: :"./client/index.jsx",
+  entry: "./client/index.jsx",
   output: {
     path: path.resolve(__dirname, "public"),
-    filename: bundle.js,
+    filename: 'bundle.js',
   },
   module: {
     rules: [
