@@ -1,47 +1,45 @@
-
+/* eslint-disable linebreak-style */
 const db = require('mysql');
-const config = require('./sqlconfig.js');
 const faker = require('faker');
+const config = require('./sqlconfig.js');
+
 
 const connection = db.createConnection(config);
 
-connection.connect(err => {
-  if(err) {
+connection.connect((err) => {
+  if (err) {
     throw err;
   } else {
-    console.log("DB connected!");
+    // eslint-disable-next-line no-console
+    console.log('DB connected!');
   }
 });
 
-for(var i = 0; i < 5; i ++) {
+for (let i = 0; i < 5; i += 1) {
+  const user = faker.name.findName();
 
-  let user = faker.name.findName();
+  const rating = faker.random.number({ min: 0, max: 5 });
 
-  let rating = faker.random.number({min:0, max:5});
+  const reviewDate = faker.date.between('2020-01-01', '2020-04-21');
 
-  let reviewDate = faker.date.between('2020-01-01','2020-04-21');
+  const review = faker.lorem.sentences(3, 3);
 
-  let review = faker.lorem.sentences(3,3);
+  const productID = faker.random.number({ min: 2, max: 100 });
 
-  let productID = faker.random.number({min:2, max:100});
+  const shopID = faker.random.number({ min: 1, max: 10 });
 
-  let shopID = faker.random.number({min:1, max:10});
+  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)';
 
-  let queryStr = `INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)`;
+  const params = [user, rating, reviewDate, review, productID, shopID];
 
-  let params = [user, rating, reviewDate, review, productID, shopID];
-
-  connection.query(queryStr, params, (err,res) => {
+  connection.query(queryStr, params, (err) => {
     if (err) {
-      console.log(err);
+      throw (err);
     } else {
-      console.log("row insertion successful!");
+      // eslint-disable-next-line no-console
+      console.log('row insertion successful!');
     }
   });
-};
+}
 
 connection.end();
-
-
-
-
