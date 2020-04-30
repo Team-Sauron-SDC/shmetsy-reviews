@@ -1,17 +1,41 @@
 {
-  "name": "",
-  "version": "",
-  "description": "",
+  "name": "reviews-module",
+  "description": "> Project description",
   "author": "",
-  "license": "",
+  "license": "ISC",
   "engines": {
     "node": ">=6.13.0"
   },
   "scripts": {
+    "start": "nodemon server/index.js",
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
+    "babel": "^6.23.0",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "nodemon": "^2.0.3"
   },
   "devDependencies": {
-    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor"
-  }
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor.git",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arwen-Fec/reviews-module.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Arwen-Fec/reviews-module/issues"
+  },
+  "homepage": "https://github.com/Arwen-Fec/reviews-module#readme"
 }
