@@ -13,26 +13,25 @@ connection.connect(err => {
   }
 });
 
-
-
 for(var i = 0; i < 5; i ++) {
-  let user = faker.fake("{{name.firstName}}");
 
-  let rating = faker.fake("{{random.number}}");
+  let user = faker.name.findName();
 
-  let reviewDate = "1994-09-23";
+  let rating = faker.random.number({min:0, max:5});
 
-  let review = "THIS THING WORKS";
+  let reviewDate = faker.date.between('2020-01-01','2020-04-21');
 
-  let productID = 4;
+  let review = faker.lorem.sentences(3,3);
 
-  let shopID = 6;
+  let productID = faker.random.number({min:2, max:100});
+
+  let shopID = faker.random.number({min:1, max:10});
 
   let queryStr = `INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)`;
 
-  let params = [user,rating,reviewDate,review,productID,shopID];
+  let params = [user, rating, reviewDate, review, productID, shopID];
 
-  connection.query(queryStr, params,(err,res) => {
+  connection.query(queryStr, params, (err,res) => {
     if (err) {
       console.log(err);
     } else {
@@ -40,6 +39,8 @@ for(var i = 0; i < 5; i ++) {
     }
   });
 };
+
+connection.end();
 
 
 
