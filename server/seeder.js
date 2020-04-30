@@ -15,7 +15,7 @@ connection.connect((err) => {
   }
 });
 
-for (let i = 0; i < 5; i += 1) {
+for (let i = 0; i < 10000; i += 1) {
   const user = faker.name.findName();
 
   const rating = faker.random.number({ min: 0, max: 5 });
@@ -35,11 +35,9 @@ for (let i = 0; i < 5; i += 1) {
   connection.query(queryStr, params, (err) => {
     if (err) {
       throw (err);
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('row insertion successful!');
     }
   });
+  // eslint-disable-next-line no-console
 }
 
 connection.end();
