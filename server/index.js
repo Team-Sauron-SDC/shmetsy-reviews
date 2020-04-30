@@ -8,3 +8,5 @@ app.use(bodyParser.urlencoded({
 }));
 const port = 3000;
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
+
+cosnt db = require('mysql');
