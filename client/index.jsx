@@ -13,7 +13,9 @@ class App extends React.Component {
       shopReviews: [],
       len: 0,
     current: '',
+    numProdRev: 0,
     }
+    this.filterProductReviews = this.filterProductReviews.bind(this);
   }
 
   componentDidMount() {
@@ -34,12 +36,14 @@ class App extends React.Component {
         console.log("this is the response", res.data);
         this.setState({
           reviews: res.data,
-          shopReviews: res.data
+          shopReviews: res.data,
         })
       }).catch((err) => {
         console.log("There was an error fetching data");
       }).then(() => {
         this.getShopReviewCount();
+      }).then(() => {
+        this.filterProductReviews();
       })
   }
 
@@ -50,10 +54,30 @@ class App extends React.Component {
     })
   }
 
+  filterProductReviews() {
+    const prodRevs = [];
+    const allRevs = this.state.reviews;
+    const curr = this.state.current;
+    allRevs.forEach(rev => {
+      if (rev.productID == curr) {
+        prodRevs.push(rev);
+      }
+    });
+    this.setState({
+      reviews: prodRevs,
+      numProdRev: prodRevs.length,
+    })
+  }
+
   render() {
     return (<div>
       <h1>Review List Component</h1>
-      <ReviewList reviews={this.state.reviews} current={this.state.current} total={this.state.len}/>
+      <ReviewList
+      reviews={this.state.reviews}
+      current={this.state.current}
+      total={this.state.len}
+      shop={this.state.numProdRev}
+      filterProductReviews={this.filterProductReviews}/>
     </div>)
   }
 
