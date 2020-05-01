@@ -9,13 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviews: [{
-        user: 'Travis Scott',
-        text: 'this is honestly wack'
-    },{
-      user: 'Lionel Richie',
-      text: 'This mask is love'
-    }],
+      reviews: [],
     current: '',
     }
   }
