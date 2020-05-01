@@ -10,7 +10,6 @@ connection.connect((err) => {
   if (err) {
     throw err;
   } else {
-    // eslint-disable-next-line no-console
     console.log('DB connected!');
   }
 });
@@ -37,7 +36,6 @@ for (let i = 0; i < 10000; i += 1) {
       throw (err);
     }
   });
-  // eslint-disable-next-line no-console
 }
 
 connection.end();

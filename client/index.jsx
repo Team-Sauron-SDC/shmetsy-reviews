@@ -16,13 +16,35 @@ class App extends React.Component {
       user: 'Lionel Richie',
       text: 'This mask is love'
     }],
+    current: '',
     }
+  }
+
+  componentDidMount() {
+    const uniqueID = window.location.pathname.substring(1,2);
+    console.log(uniqueID);
+    this.setState({
+      current: uniqueID
+    }, () => {
+      this.getReviews();
+    });
+
+  }
+
+  getReviews() {
+    axios.get(`/reviews/${this.state.current}`)
+    // axios.get('/reviews', {params: {
+    //   ID: this.state.current
+    // }})
+      .then(res => {
+        console.log("this is the response", res);
+      })
   }
 
   render() {
     return (<div>
       <h1>Review List Component</h1>
-      <ReviewList reviews={this.state.reviews}/>
+      <ReviewList reviews={this.state.reviews} current={this.state.current}/>
     </div>)
   }
 
