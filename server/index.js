@@ -41,7 +41,6 @@ app.get('/reviews/:id', (req, res) => {
     getShopReviews(shop, (results) => {
       res.status(200).send(results);
     })
-    // res.status(200).send(data);
   })
 })
 

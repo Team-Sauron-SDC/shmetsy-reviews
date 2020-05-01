@@ -10,6 +10,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       reviews: [],
+      shopReviews: [],
+      len: 0,
     current: '',
     }
   }
@@ -32,16 +34,26 @@ class App extends React.Component {
         console.log("this is the response", res.data);
         this.setState({
           reviews: res.data,
+          shopReviews: res.data
         })
       }).catch((err) => {
         console.log("There was an error fetching data");
+      }).then(() => {
+        this.getShopReviewCount();
       })
+  }
+
+  getShopReviewCount () {
+    const len = this.state.shopReviews.length;
+    this.setState({
+      len: len
+    })
   }
 
   render() {
     return (<div>
       <h1>Review List Component</h1>
-      <ReviewList reviews={this.state.reviews} current={this.state.current}/>
+      <ReviewList reviews={this.state.reviews} current={this.state.current} total={this.state.len}/>
     </div>)
   }
 

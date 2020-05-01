@@ -1,10 +1,10 @@
 import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
 
-const ReviewList = ({reviews, current}) => {
+const ReviewList = ({reviews, current, total}) => {
   return (
     <div>
-      <h3>535 Reviews</h3>
+      <h3>{`${total} Reviews`}</h3>
       {reviews.map((review, index) =>
       <ReviewListEntry review={review} key={index} current={current}/>
       )}
