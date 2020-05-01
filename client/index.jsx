@@ -33,11 +33,13 @@ class App extends React.Component {
 
   getReviews() {
     axios.get(`/reviews/${this.state.current}`)
-    // axios.get('/reviews', {params: {
-    //   ID: this.state.current
-    // }})
       .then(res => {
-        console.log("this is the response", res);
+        console.log("this is the response", res.data);
+        this.setState({
+          reviews: res.data
+        })
+      }).catch((err) => {
+        console.log("There was an error fetching data");
       })
   }
 

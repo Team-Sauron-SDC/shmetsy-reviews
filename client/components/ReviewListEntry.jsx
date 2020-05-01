@@ -2,8 +2,9 @@ import React from 'react';
 
 const ReviewListEntry = ({review}) =>
   (<div>
-    <div>{review.user}</div>
-    <div>{review.text}</div>
+    <div>{review.username}</div>
+    <div>{review.reviewDate}</div>
+    <div>{review.review}</div>
   </div>)
 
 
