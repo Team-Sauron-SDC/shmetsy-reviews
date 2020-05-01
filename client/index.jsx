@@ -15,6 +15,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log(window.location.href);
     const uniqueID = window.location.pathname.substring(1,2);
     console.log(uniqueID);
     this.setState({

@@ -27,24 +27,44 @@ connection.connect(err => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.redirect('http://localhost:3000/1/')
+});
+
 app.get('/reviews/:id', (req, res) => {
   console.log(req.params);
   const id = req.params.id;
   getProductReviews(id,(data) => {
-    console.log("heres the data", data[0]);
-    res.status(200).send(data);
+    console.log("heres the data", data[1]);
+    const shop = data[1].shopID;
+    console.log(shop);
+    getShopReviews(shop, (results) => {
+      res.status(200).send(results);
+    })
+    // res.status(200).send(data);
   })
 })
 
 //--------------------------- DB FUNCTIONS -----------------------------//
 
 const getProductReviews = (id, callback)  => {
-  const queryStr = `SELECT * from reviews where productID = ${id}`;
+  let queryStr = `SELECT * from reviews where productID = ${id}`;
   connection.query(queryStr, (err, docs) => {
     if (err) {
-      callback(err)
+      callback(err);
     } else {
-      callback(docs)
+      callback(docs);
+    }
+  })
+}
+
+const getShopReviews = (id, callback) => {
+  const queryStr = `SELECT * from reviews where shopID = ${id}`;
+  connection.query(queryStr, (err, docs) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(docs);
     }
   })
 }
