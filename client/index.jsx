@@ -30,7 +30,7 @@ class App extends React.Component {
       .then(res => {
         console.log("this is the response", res.data);
         this.setState({
-          reviews: res.data
+          reviews: res.data,
         })
       }).catch((err) => {
         console.log("There was an error fetching data");
