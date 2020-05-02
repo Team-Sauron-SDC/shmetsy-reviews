@@ -12,8 +12,9 @@ class App extends React.Component {
       reviews: [],
       shopReviews: [],
       len: 0,
-    current: '',
-    numProdRev: 0,
+      current: '',
+      numProdRev: 0,
+      avgShopRating: 0,
     }
     this.filterProductReviews = this.filterProductReviews.bind(this);
     this.filterShopReviews = this.filterShopReviews.bind(this);
@@ -32,7 +33,6 @@ class App extends React.Component {
   getReviews() {
     axios.get(`/reviews/${this.state.current}`)
       .then(res => {
-        console.log("this is the response", res.data);
         this.setState({
           reviews: res.data,
           shopReviews: res.data,
@@ -43,6 +43,8 @@ class App extends React.Component {
         this.getShopReviewCount();
       }).then(() => {
         this.filterProductReviews();
+      }).then(() => {
+        this.getAverageShopReview();
       })
   }
 
@@ -75,6 +77,20 @@ class App extends React.Component {
     })
   }
 
+  getAverageShopReview() {
+    const shopRevs = this.state.shopReviews;
+    let total = 0;
+    shopRevs.forEach((rev) => {
+      total += rev.rating;
+    })
+    let avg = total/this.state.len;
+    this.setState({
+      avgShopRating: avg
+    })
+  }
+
+
+
   render() {
     return (<div>
       <h1>Review List Component</h1>
@@ -84,7 +100,9 @@ class App extends React.Component {
       total={this.state.len}
       shop={this.state.numProdRev}
       filterProductReviews={this.filterProductReviews}
-      filterShopReviews={this.filterShopReviews}/>
+      filterShopReviews={this.filterShopReviews}
+      avg={this.state.avgShopRating}
+      />
     </div>)
   }
 
