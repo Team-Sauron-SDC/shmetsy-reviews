@@ -28,7 +28,7 @@ connection.connect(err => {
 });
 
 app.get('/', (req, res) => {
-  res.redirect('http://localhost:3000/1/')
+  res.redirect('/1');
 });
 
 app.get('/reviews/:id', (req, res) => {
