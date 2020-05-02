@@ -16,6 +16,7 @@ class App extends React.Component {
     numProdRev: 0,
     }
     this.filterProductReviews = this.filterProductReviews.bind(this);
+    this.filterShopReviews = this.filterShopReviews.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,13 @@ class App extends React.Component {
     })
   }
 
+  filterShopReviews() {
+    const shopRevs = this.state.shopReviews;
+    this.setState({
+      reviews: shopRevs,
+    })
+  }
+
   render() {
     return (<div>
       <h1>Review List Component</h1>
@@ -77,7 +85,8 @@ class App extends React.Component {
       current={this.state.current}
       total={this.state.len}
       shop={this.state.numProdRev}
-      filterProductReviews={this.filterProductReviews}/>
+      filterProductReviews={this.filterProductReviews}
+      filterShopReviews={this.filterShopReviews}/>
     </div>)
   }
 
