@@ -49,7 +49,10 @@ class App extends React.Component {
       }).then(() => {
         this.getAverageShopReview();
       }).then(() => {
-        const sorted = this.state.reviews.sort((a,b) => b.reviewDate - a.reviewDate);
+        let slice = this.state.reviews.slice(0,4);
+        this.setState({
+          reviews: slice
+        })
       })
   }
 
