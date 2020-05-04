@@ -10,6 +10,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       reviews: [],
+      displayed: [],
+      sIndex: 0,
+      eIndex: 5,
       shopReviews: [],
       len: 0,
       current: '',
