@@ -12,7 +12,7 @@ class App extends React.Component {
       reviews: [],
       displayed: [],
       sIndex: 0,
-      eIndex: 5,
+      eIndex: 4,
       shopReviews: [],
       len: 0,
       current: '',
@@ -48,6 +48,8 @@ class App extends React.Component {
         this.filterProductReviews();
       }).then(() => {
         this.getAverageShopReview();
+      }).then(() => {
+        const sorted = this.state.reviews.sort((a,b) => b.reviewDate - a.reviewDate);
       })
   }
 
