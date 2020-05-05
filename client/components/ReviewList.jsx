@@ -11,9 +11,9 @@ const ReviewList = ({reviews, current, total, shop, filterProductReviews, filter
       </div>
       <div className="container-two">
         <button className="rev-button" onClick={filterProductReviews}>Reviews for this item</button>
-        <div>{shop}</div>
+        <span className="wt-badge">{shop}</span>
         <button  className="rev-button" onClick={filterShopReviews}>Reviews for this shop</button>
-        <div>{total}</div>
+        <span className="wt-badge">{total}</span>
       </div>
       {reviews.map((review, index) =>
       <ReviewListEntry review={review} key={index} current={current}/>
