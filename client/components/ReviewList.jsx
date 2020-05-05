@@ -5,12 +5,14 @@ import Rating from 'react-rating';
 const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page}) => {
   return (
     <div>
-      <h3>{`${total} Reviews`}</h3>
-      <Rating emptySymbol="fa fa-star-o" fullSymbol="fa fa-star" initialRating={avg} readonly={true}/>
-      <div>
-        <button onClick={filterProductReviews}>Reviews for this item</button>
+      <div className="container-one">
+      <div className="heading">{`${total} reviews`}</div>
+      <Rating  className="head-star" emptySymbol="fa fa-star-o" fullSymbol="fa fa-star" initialRating={avg} readonly={true}/>
+      </div>
+      <div className="container-two">
+        <button className="rev-button" onClick={filterProductReviews}>Reviews for this item</button>
         <div>{shop}</div>
-        <button onClick={filterShopReviews}>Reviews for this shop</button>
+        <button  className="rev-button" onClick={filterShopReviews}>Reviews for this shop</button>
         <div>{total}</div>
       </div>
       {reviews.map((review, index) =>
