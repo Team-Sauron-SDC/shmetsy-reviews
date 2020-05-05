@@ -10,13 +10,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       reviews: [],
-    current: '',
+      shopReviews: [],
+      len: 0,
+      current: '',
+      numProdRev: 0,
+      avgShopRating: 0,
     }
+    this.filterProductReviews = this.filterProductReviews.bind(this);
+    this.filterShopReviews = this.filterShopReviews.bind(this);
   }
 
   componentDidMount() {
     const uniqueID = window.location.pathname.substring(1,2);
-    console.log(uniqueID);
     this.setState({
       current: uniqueID
     }, () => {
@@ -28,19 +33,76 @@ class App extends React.Component {
   getReviews() {
     axios.get(`/reviews/${this.state.current}`)
       .then(res => {
-        console.log("this is the response", res.data);
         this.setState({
           reviews: res.data,
+          shopReviews: res.data,
         })
       }).catch((err) => {
         console.log("There was an error fetching data");
+      }).then(() => {
+        this.getShopReviewCount();
+      }).then(() => {
+        this.filterProductReviews();
+      }).then(() => {
+        this.getAverageShopReview();
       })
   }
+
+  getShopReviewCount () {
+    const len = this.state.shopReviews.length;
+    this.setState({
+      len: len
+    })
+  }
+
+  filterProductReviews() {
+    const prodRevs = [];
+    const allRevs = this.state.reviews;
+    const curr = this.state.current;
+    allRevs.forEach(rev => {
+      if (rev.productID == curr) {
+        prodRevs.push(rev);
+      }
+    });
+    this.setState({
+      reviews: prodRevs,
+      numProdRev: prodRevs.length,
+    })
+  }
+
+  filterShopReviews() {
+    const shopRevs = this.state.shopReviews;
+    this.setState({
+      reviews: shopRevs,
+    })
+  }
+
+  getAverageShopReview() {
+    const shopRevs = this.state.shopReviews;
+    let total = 0;
+    shopRevs.forEach((rev) => {
+      total += rev.rating;
+    })
+    let avg = total/this.state.len;
+    this.setState({
+      avgShopRating: avg
+    })
+  }
+
+
 
   render() {
     return (<div>
       <h1>Review List Component</h1>
-      <ReviewList reviews={this.state.reviews} current={this.state.current}/>
+      <ReviewList
+      reviews={this.state.reviews}
+      current={this.state.current}
+      total={this.state.len}
+      shop={this.state.numProdRev}
+      filterProductReviews={this.filterProductReviews}
+      filterShopReviews={this.filterShopReviews}
+      avg={this.state.avgShopRating}
+      />
     </div>)
   }
 

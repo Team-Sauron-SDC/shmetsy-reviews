@@ -17,7 +17,7 @@ CREATE TABLE reviews (
 
 INSERT INTO reviews (id, username, rating, reviewDate, review, productID, shopID) VALUES (1, 'John Jacob', 5, "2020-04-21", 'This mask is literally the best thing I have purchased in my entire 40 years of life.\nJust buy it...NOW', 1, 1);
 
-INSERT INTO reviews (id, username, rating, reviewDate, review, productID, shopID) VALUES (2, 'Jingleheimer Schmidt', 4, "2020-04-18", 'Honestly, my brother John told me to get this mask and I have to say I am very happy.The quality is amazing! \nOutside of wishing there were more color options, I am satisfied and would recommend this product', 1, 1);
+INSERT INTO reviews (id, username, rating, reviewDate, review, productID, shopID) VALUES (2, 'Jingleheimer Schmidt', 4, "2020-04-18", 'Honestly, my brother John told me to get this mask and I have to say I am very happy. The quality is amazing! \nOutside of wishing there were more color options, I am satisfied and would recommend this product', 1, 1);
 
 INSERT INTO reviews (id, username, rating, reviewDate, review, productID, shopID) VALUES (3, 'Lebron James', 3, "2020-04-28", 'Cool mask I guess...It fits well but tends to get a little uncomfortable over long periods.\nOne day I hope I can stop wearing these things.', 1, 1);
 
