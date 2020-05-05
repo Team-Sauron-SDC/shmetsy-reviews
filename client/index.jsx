@@ -9,12 +9,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      counter: 0,
       reviews: [],
       displayed: [],
       sIndex: 0,
       eIndex: 4,
       shopReviews: [],
       prodReviews: [],
+      onProd: true,
       len: 0,
       current: '',
       numProdRev: 0,
@@ -80,7 +82,8 @@ class App extends React.Component {
       displayed: prodRevs.slice(0,4),
       sIndex: 0,
       eIndex: 4,
-      prodReviews: prodRevs
+      prodReviews: prodRevs,
+      onShop: true
     })
   }
 
@@ -90,6 +93,7 @@ class App extends React.Component {
       displayed: shopRevs.slice(0,4),
       sIndex: 0,
       eIndex: 4,
+      onShop: false,
     })
   }
 
@@ -106,27 +110,52 @@ class App extends React.Component {
   }
 
   onNextReviews() {
-    let allRevs = this.state.reviews;
-    let start = this.state.eIndex;
-    let end = this.state.eIndex + 4;
-    console.log("this is start: ", start);
-    console.log("this is end: ", end);
-    // if(end > )
-    const newSlice = allRevs.slice(start,end);
-    if(end < this.state.prodReviews.length) {
-      this.setState({
-        sIndex: start,
-        eIndex: end,
-        displayed: newSlice,
-      })
-    } else {
-      start ++;
-      let end = this.state.prodReviews.length;
-      this.setState({
-        sIndex: start,
-        eIndex: end,
-        displayed: newSlice,
-      })
+    // let allRevs = this.state.reviews;
+    // let start = this.state.eIndex;
+    // let end = this.state.eIndex + 4;
+    // console.log("this is start: ", start);
+    // console.log("this is end: ", end);
+    // // if(end > )
+    // const newSlice = allRevs.slice(start,end);
+    // if(end < this.state.prodReviews.length) {
+    //   let start = this.state.eIndex;
+    // let end = this.state.eIndex + 4;
+    // console.log("this is start: ", start);
+    // console.log("this is end: ", end);
+    // const newSlice = allRevs.slice(start,end);
+    //   this.setState({
+    //     sIndex: start,
+    //     eIndex: end,
+    //     displayed: newSlice,
+    //   })
+    // } else {
+    //   // start ++;
+    //   let end = this.state.prodReviews.length;
+    //   let lastSlice =
+    //   console.log('prod reviews length: ', end);
+    //   this.setState({
+    //     sIndex: start,
+    //     eIndex: end,
+    //     displayed: newSlice,
+    //   })
+    // }
+    if(this.state.onProd === true) {
+      let counter = this.state.counter;
+      let productRevLength = this.state.prodReviews.length;
+      let maxPresses = Math.floor(productRevLength / 4);
+      console.log("max presses: ", maxPresses);
+      if(counter < maxPresses) {
+        let start = this.state.sIndex + 4;
+        let end = this.state.eIndex + 4;
+        let next = this.state.prodReviews.slice(start, end);
+        counter ++;
+        this.setState({
+          counter: counter,
+          sIndex: start,
+          eIndex: end,
+          displayed: next,
+        })
+      }
     }
   }
 
