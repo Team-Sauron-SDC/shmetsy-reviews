@@ -83,7 +83,8 @@ class App extends React.Component {
       sIndex: 0,
       eIndex: 4,
       prodReviews: prodRevs,
-      onShop: true
+      onProd: true,
+      counter: 0,
     })
   }
 
@@ -93,7 +94,8 @@ class App extends React.Component {
       displayed: shopRevs.slice(0,4),
       sIndex: 0,
       eIndex: 4,
-      onShop: false,
+      onProd: false,
+      counter: 0,
     })
   }
 
@@ -110,35 +112,6 @@ class App extends React.Component {
   }
 
   onNextReviews() {
-    // let allRevs = this.state.reviews;
-    // let start = this.state.eIndex;
-    // let end = this.state.eIndex + 4;
-    // console.log("this is start: ", start);
-    // console.log("this is end: ", end);
-    // // if(end > )
-    // const newSlice = allRevs.slice(start,end);
-    // if(end < this.state.prodReviews.length) {
-    //   let start = this.state.eIndex;
-    // let end = this.state.eIndex + 4;
-    // console.log("this is start: ", start);
-    // console.log("this is end: ", end);
-    // const newSlice = allRevs.slice(start,end);
-    //   this.setState({
-    //     sIndex: start,
-    //     eIndex: end,
-    //     displayed: newSlice,
-    //   })
-    // } else {
-    //   // start ++;
-    //   let end = this.state.prodReviews.length;
-    //   let lastSlice =
-    //   console.log('prod reviews length: ', end);
-    //   this.setState({
-    //     sIndex: start,
-    //     eIndex: end,
-    //     displayed: newSlice,
-    //   })
-    // }
     if(this.state.onProd === true) {
       let counter = this.state.counter;
       let productRevLength = this.state.prodReviews.length;
@@ -148,6 +121,23 @@ class App extends React.Component {
         let start = this.state.sIndex + 4;
         let end = this.state.eIndex + 4;
         let next = this.state.prodReviews.slice(start, end);
+        counter ++;
+        this.setState({
+          counter: counter,
+          sIndex: start,
+          eIndex: end,
+          displayed: next,
+        })
+      }
+    } else {
+      let counter = this.state.counter;
+      let shopRevLength = this.state.shopReviews.length;
+      let maxPresses = Math.floor(shopRevLength / 4);
+      console.log("max presses: ", maxPresses);
+      if(counter < maxPresses) {
+        let start = this.state.sIndex + 4;
+        let end = this.state.eIndex + 4;
+        let next = this.state.shopReviews.slice(start, end);
         counter ++;
         this.setState({
           counter: counter,
