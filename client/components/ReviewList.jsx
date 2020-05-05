@@ -2,7 +2,7 @@ import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
 import Rating from 'react-rating';
 
-const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous}) => {
+const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page}) => {
   return (
     <div>
       <h3>{`${total} Reviews`}</h3>
@@ -17,6 +17,7 @@ const ReviewList = ({reviews, current, total, shop, filterProductReviews, filter
       <ReviewListEntry review={review} key={index} current={current}/>
       )}
       <button onClick={previous}>&#x0003C;-</button>
+      <button>{page}</button>
       <button onClick={next}>-></button>
     </div>
   )

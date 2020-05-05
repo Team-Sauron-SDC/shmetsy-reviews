@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0,
+      counter: 1,
       reviews: [],
       displayed: [],
       sIndex: 0,
@@ -85,7 +85,7 @@ class App extends React.Component {
       eIndex: 4,
       prodReviews: prodRevs,
       onProd: true,
-      counter: 0,
+      counter: 1,
     })
   }
 
@@ -96,7 +96,7 @@ class App extends React.Component {
       sIndex: 0,
       eIndex: 4,
       onProd: false,
-      counter: 0,
+      counter: 1,
     })
   }
 
@@ -117,7 +117,7 @@ class App extends React.Component {
       let counter = this.state.counter;
       let productRevLength = this.state.prodReviews.length;
       let maxPresses = Math.floor(productRevLength / 4);
-      if(counter < maxPresses) {
+      if(counter <= maxPresses) {
         let start = this.state.sIndex + 4;
         let end = this.state.eIndex + 4;
         let next = this.state.prodReviews.slice(start, end);
@@ -133,7 +133,7 @@ class App extends React.Component {
       let counter = this.state.counter;
       let shopRevLength = this.state.shopReviews.length;
       let maxPresses = Math.floor(shopRevLength / 4);
-      if(counter < maxPresses) {
+      if(counter <= maxPresses) {
         let start = this.state.sIndex + 4;
         let end = this.state.eIndex + 4;
         let next = this.state.shopReviews.slice(start, end);
@@ -153,7 +153,7 @@ class App extends React.Component {
       let counter = this.state.counter;
       let productRevLength = this.state.prodReviews.length;
       let maxPresses = Math.floor(productRevLength / 4);
-      if(counter > 0) {
+      if(counter > 1) {
         let start = this.state.sIndex - 4;
         let end = this.state.eIndex - 4;
         let next = this.state.prodReviews.slice(start, end);
@@ -169,7 +169,7 @@ class App extends React.Component {
       let counter = this.state.counter;
       let shopRevLength = this.state.shopReviews.length;
       let maxPresses = Math.floor(shopRevLength / 4);
-      if(counter > 0) {
+      if(counter > 1) {
         let start = this.state.sIndex - 4;
         let end = this.state.eIndex - 4;
         let next = this.state.shopReviews.slice(start, end);
@@ -201,6 +201,7 @@ class App extends React.Component {
       avg={this.state.avgShopRating}
       next={this.onNextReviews}
       previous={this.onPreviousReviews}
+      page={this.state.counter}
       />
     </div>)
   }
