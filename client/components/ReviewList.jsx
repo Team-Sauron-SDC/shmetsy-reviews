@@ -1,12 +1,12 @@
 import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
-import ReactStars from 'react-stars';
+import Rating from 'react-rating';
 
 const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg}) => {
   return (
     <div>
       <h3>{`${total} Reviews`}</h3>
-      <ReactStars count={5} value={avg} edit={false} size={30} color2={"black"} />
+      <Rating emptySymbol="fa fa-star-o" fullSymbol="fa fa-star" initialRating={avg} readonly={true}/>
       <div>
         <button onClick={filterProductReviews}>Reviews for this item</button>
         <div>{shop}</div>
