@@ -10,17 +10,21 @@ const ReviewList = ({reviews, current, total, shop, filterProductReviews, filter
       <Rating  className="head-star" emptySymbol="fa fa-star-o" fullSymbol="fa fa-star" initialRating={avg} readonly={true}/>
       </div>
       <div className="container-two">
+        <div className="testing">
         <button className="rev-button" onClick={filterProductReviews}>Reviews for this item</button>
         <span className="wt-badge">{shop}</span>
+        </div>
+      <div className="testing">
         <button  className="rev-button" onClick={filterShopReviews}>Reviews for this shop</button>
         <span className="wt-badge">{total}</span>
+        </div>
       </div>
       {reviews.map((review, index) =>
       <ReviewListEntry review={review} key={index} current={current}/>
       )}
-      <button onClick={previous}>&#x0003C;-</button>
-      <button>{page}</button>
-      <button onClick={next}>-></button>
+      <div className="wt-page" onClick={previous}>&#x2190;</div>
+      <div className="wt-page">{page}</div>
+      <div className="wt-page" onClick={next}>&#x2192;</div>
     </div>
   )
 }
