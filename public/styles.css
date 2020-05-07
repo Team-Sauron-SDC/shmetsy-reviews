@@ -150,6 +150,10 @@ font-weight: 400;
   background-color: grey;
 }
 
+.dark:hover {
+  background-color: grey;
+}
+
 .selected {
 
   border-bottom: 2px solid black;

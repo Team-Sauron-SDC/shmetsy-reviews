@@ -29,6 +29,7 @@ class App extends React.Component {
     this.filterShopReviews = this.filterShopReviews.bind(this);
     this.onNextReviews = this.onNextReviews.bind(this);
     this.onPreviousReviews = this.onPreviousReviews.bind(this);
+    this.onPageOneClick = this.onPageOneClick.bind(this);
   }
 
   componentDidMount() {
@@ -196,6 +197,36 @@ class App extends React.Component {
     }
   }
 
+  onPageOneClick () {
+    if(this.state.onProd === true) {
+      let productRevLength = this.state.prodReviews.length;
+        let first = this.state.prodReviews.slice(0, 4);
+        this.setState({
+          counter: 1,
+          sIndex: 0,
+          eIndex: 4,
+          displayed: first,
+        })
+      }
+    //   else {
+    //   let counter = this.state.counter;
+    //   let shopRevLength = this.state.shopReviews.length;
+    //   let maxPresses = Math.floor(shopRevLength / 4);
+    //   if(counter > 1) {
+    //     let start = this.state.sIndex - 4;
+    //     let end = this.state.eIndex - 4;
+    //     let next = this.state.shopReviews.slice(start, end);
+    //     counter --;
+    //     this.setState({
+    //       counter: counter,
+    //       sIndex: start,
+    //       eIndex: end,
+    //       displayed: next,
+    //     })
+    //   }
+    // }
+  }
+
 
 
 
@@ -217,6 +248,7 @@ class App extends React.Component {
       classy={this.state.classProd}
       unselected={this.state.classShop}
       last={this.state.last}
+      pageOne={this.onPageOneClick}
       />
     </div>)
   }
