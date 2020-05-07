@@ -23,7 +23,7 @@
 }
 
 .review {
-margin-bottom: 30px;
+margin-bottom: 100px;
 margin-left: 43px;
 font-family: 'Roboto', sans-serif;
 font-weight: 400;
@@ -107,6 +107,11 @@ font-weight: 400;
   cursor: pointer;
 }
 
+.dots {
+  font-family: 'Roboto', sans-serif;
+  display: inline-block;
+}
+
 .wt {
   background-color: rgb(235, 235, 235);
   border-radius: 50px;
@@ -124,7 +129,7 @@ font-weight: 400;
 }
 
 .wt-page {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(224, 224, 224);
   font-family: 'Roboto', sans-serif;
   display: inline-block;
   border-radius: 50px;
@@ -141,6 +146,10 @@ font-weight: 400;
   text-align: center;
 }
 
+.dark {
+  background-color: grey;
+}
+
 .selected {
 
   border-bottom: 2px solid black;
@@ -148,7 +157,7 @@ font-weight: 400;
 }
 
 .empty {
-  margin-left: 8px;
+  margin-left: 12px;
   margin-right: 10px;
 }
 

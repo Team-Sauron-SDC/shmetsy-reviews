@@ -22,7 +22,8 @@ class App extends React.Component {
       numProdRev: 0,
       avgShopRating: 0,
       classProd: "selected",
-      classShop: "unselected"
+      classShop: "unselected",
+      last: 0,
     }
     this.filterProductReviews = this.filterProductReviews.bind(this);
     this.filterShopReviews = this.filterShopReviews.bind(this);
@@ -79,6 +80,7 @@ class App extends React.Component {
         prodRevs.push(rev);
       }
     });
+    let max = Math.floor(prodRevs.length / 4) + 1;
     this.setState({
       reviews: prodRevs,
       numProdRev: prodRevs.length,
@@ -89,12 +91,14 @@ class App extends React.Component {
       onProd: true,
       counter: 1,
       classProd: "selected",
-      classShop: "unselected"
+      classShop: "unselected",
+      last: max,
     })
   }
 
   filterShopReviews() {
     const shopRevs = this.state.shopReviews;
+    let max = Math.floor(shopRevs.length / 4) + 1;
     this.setState({
       displayed: shopRevs.slice(0,4),
       sIndex: 0,
@@ -102,7 +106,8 @@ class App extends React.Component {
       onProd: false,
       counter: 1,
       classShop: "selected",
-      classProd: "unselected"
+      classProd: "unselected",
+      last: max
     })
   }
 
@@ -123,6 +128,7 @@ class App extends React.Component {
       let counter = this.state.counter;
       let productRevLength = this.state.prodReviews.length;
       let maxPresses = Math.floor(productRevLength / 4);
+      console.log(maxPresses);
       if(counter <= maxPresses) {
         let start = this.state.sIndex + 4;
         let end = this.state.eIndex + 4;
@@ -210,6 +216,7 @@ class App extends React.Component {
       page={this.state.counter}
       classy={this.state.classProd}
       unselected={this.state.classShop}
+      last={this.state.last}
       />
     </div>)
   }
