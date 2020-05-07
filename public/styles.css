@@ -125,9 +125,13 @@ margin-left: 43px;
   margin-right: 15px;
 }
 
+.blue {
+  background-color: lightblue;
+}
+
 .testing:hover {
-  border-bottom: 2px solid black;
   margin-bottom: -2px;
+  border-bottom: 2px solid black;
 }
 
 .username {

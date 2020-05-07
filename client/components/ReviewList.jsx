@@ -2,7 +2,7 @@ import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
 import Rating from 'react-rating';
 
-const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page}) => {
+const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page, classy}) => {
   return (
     <div>
       <div className="container-one">
@@ -10,7 +10,7 @@ const ReviewList = ({reviews, current, total, shop, filterProductReviews, filter
       <Rating  className="head-star" emptySymbol="fa fa-star-o" fullSymbol="fa fa-star" initialRating={avg} readonly={true}/>
       </div>
       <div className="container-two">
-        <div className="testing">
+        <div className={classy}>
         <button className="rev-button" onClick={filterProductReviews}>Reviews for this item</button>
         <span className="wt-badge">{shop}</span>
         </div>
