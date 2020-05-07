@@ -220,14 +220,27 @@ class App extends React.Component {
 
     onLastPageClick () {
       if(this.state.onProd === true) {
+        let test = 4 * this.state.last;
         let end = this.state.prodReviews.length;
-        let start = Math.floor(this.state.prodReviews.length / 4);
-        let last = this.state.prodReviews.slice(end - start, end);
+        let start = end % 4;
+        let last = this.state.prodReviews.slice(end - start, test);
         let lastPage = Math.floor(end / 4) + 1;
         this.setState({
           counter: lastPage,
-          sIndex: start,
-          eIndex: end,
+          sIndex: test - 4,
+          eIndex: test,
+          displayed: last
+        })
+      } else {
+        let test = 4 * this.state.last;
+        let end = this.state.shopReviews.length;
+        let start = end % 4;
+        let last = this.state.shopReviews.slice(end - start, test);
+        let lastPage = Math.floor(end / 4) + 1;
+        this.setState({
+          counter: lastPage,
+          sIndex: test - 4,
+          eIndex: test,
           displayed: last
         })
       }
