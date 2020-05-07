@@ -223,26 +223,47 @@ class App extends React.Component {
         let test = 4 * this.state.last;
         let end = this.state.prodReviews.length;
         let start = end % 4;
+        let evenLast = this.state.prodReviews.slice(end - 4, end);
         let last = this.state.prodReviews.slice(end - start, test);
         let lastPage = Math.floor(end / 4) + 1;
-        this.setState({
-          counter: lastPage,
-          sIndex: test - 4,
-          eIndex: test,
-          displayed: last
-        })
+        if(start !== 0) {
+          this.setState({
+            counter: lastPage,
+            sIndex: test - 4,
+            eIndex: test,
+            displayed: last,
+          })
+        } else {
+          this.setState({
+            counter: lastPage,
+            sIndex: end - 4,
+            eIndex: end,
+            displayed: evenLast,
+          })
+        }
+
       } else {
         let test = 4 * this.state.last;
         let end = this.state.shopReviews.length;
         let start = end % 4;
+        let evenLast = this.state.shopReviews.slice(end - 4, end);
         let last = this.state.shopReviews.slice(end - start, test);
         let lastPage = Math.floor(end / 4) + 1;
-        this.setState({
-          counter: lastPage,
-          sIndex: test - 4,
-          eIndex: test,
-          displayed: last
-        })
+        if(start !== 0) {
+          this.setState({
+            counter: lastPage,
+            sIndex: test - 4,
+            eIndex: test,
+            displayed: last,
+          })
+        } else {
+          this.setState({
+            counter: lastPage,
+            sIndex: end - 4,
+            eIndex: end,
+            displayed: evenLast,
+          })
+        }
       }
     }
 
