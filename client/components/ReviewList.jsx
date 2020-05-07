@@ -2,7 +2,7 @@ import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
 import Rating from 'react-rating';
 
-const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page, classy, unselected, last, pageOne}) => {
+const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page, classy, unselected, last, pageOne, pageLast}) => {
   return (
     <div>
       <div className="container-one">
@@ -32,7 +32,7 @@ const ReviewList = ({reviews, current, total, shop, filterProductReviews, filter
       <div className="dots">...</div>
       <div className="wt-page dark">{page}</div>
       <div className="dots">...</div>
-      <div className="wt-page">{last}</div>
+      <div className="wt-page" onClick={pageLast}>{last}</div>
       <div className="wt-page" onClick={next}><i className="fas fa-arrow-right"></i></div>
     </div>
   )
