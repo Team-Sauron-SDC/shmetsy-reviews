@@ -21,7 +21,8 @@ class App extends React.Component {
       current: '',
       numProdRev: 0,
       avgShopRating: 0,
-      classProd: "testing",
+      classProd: "selected",
+      classShop: "unselected"
     }
     this.filterProductReviews = this.filterProductReviews.bind(this);
     this.filterShopReviews = this.filterShopReviews.bind(this);
@@ -87,7 +88,8 @@ class App extends React.Component {
       prodReviews: prodRevs,
       onProd: true,
       counter: 1,
-      classProd: "testing"
+      classProd: "selected",
+      classShop: "unselected"
     })
   }
 
@@ -99,6 +101,8 @@ class App extends React.Component {
       eIndex: 4,
       onProd: false,
       counter: 1,
+      classShop: "selected",
+      classProd: "unselected"
     })
   }
 
@@ -205,6 +209,7 @@ class App extends React.Component {
       previous={this.onPreviousReviews}
       page={this.state.counter}
       classy={this.state.classProd}
+      unselected={this.state.classShop}
       />
     </div>)
   }

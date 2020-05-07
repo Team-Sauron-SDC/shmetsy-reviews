@@ -26,6 +26,7 @@
 margin-bottom: 30px;
 margin-left: 43px;
 font-family: 'Roboto', sans-serif;
+font-weight: 400;
 }
 
 .date {
@@ -33,6 +34,7 @@ font-family: 'Roboto', sans-serif;
   color: rgb(22, 22, 22);
   margin-left: 5px;
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .heading {
@@ -64,15 +66,24 @@ font-family: 'Roboto', sans-serif;
   outline: none;
 }
 
-.rev-button:hover {
-  border-bottom: 2px solid black;
-  margin-bottom: -2px;
+.shop-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 12px 0;
+  margin: 0 12px;
+  margin-left: 13px;
+  font-size: 16px;
+  outline: none;
 }
+
 
 .individual-rating {
   margin-left: 42px;
   margin-top: 7px;
-  margin-bottom: 6px;
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 
 .user-icon {
@@ -130,24 +141,32 @@ font-family: 'Roboto', sans-serif;
   text-align: center;
 }
 
-.testing{
-  margin-right: 15px;
-}
+.selected {
 
-.blue {
-  background-color: lightblue;
-}
-
-.testing:hover {
-  margin-bottom: -2px;
   border-bottom: 2px solid black;
+  margin-bottom: -2px;
 }
+
+.empty {
+  margin-left: 8px;
+  margin-right: 10px;
+}
+
+
+
+.unselected:hover {
+  border-bottom: 2px solid grey;
+  margin-bottom: -2px;
+}
+
+
 
 .username {
   margin-right: 5px;
   transition: color 0.5s;
   text-decoration: underline;
   font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .username:hover {

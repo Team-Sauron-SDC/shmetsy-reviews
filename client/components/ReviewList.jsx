@@ -2,7 +2,7 @@ import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
 import Rating from 'react-rating';
 
-const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page, classy}) => {
+const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page, classy, unselected}) => {
   return (
     <div>
       <div className="container-one">
@@ -10,14 +10,19 @@ const ReviewList = ({reviews, current, total, shop, filterProductReviews, filter
       <Rating  className="head-star" emptySymbol="fa fa-star-o" fullSymbol="fa fa-star" initialRating={avg} readonly={true}/>
       </div>
       <div className="container-two">
+
         <div className={classy}>
         <button className="rev-button" onClick={filterProductReviews}>Reviews for this item</button>
         <span className="wt-badge">{shop}</span>
         </div>
-        <div className="testing">
-        <button  className="rev-button" onClick={filterShopReviews}>Reviews for this shop</button>
+
+        <div className="empty"></div>
+
+        <div className={unselected}>
+        <button  className="shop-button" onClick={filterShopReviews}>Reviews for this shop</button>
         <span className="wt-badge">{total}</span>
         </div>
+
       </div>
       {reviews.map((review, index) =>
       <ReviewListEntry review={review} key={index} current={current}/>
