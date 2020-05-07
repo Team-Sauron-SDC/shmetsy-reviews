@@ -38,6 +38,7 @@ font-family: 'Roboto', sans-serif;
 .heading {
   font-size: 26px;
   padding-right: 5px;
+  font-weight: 300;
 }
 
 .head-star {
@@ -125,6 +126,7 @@ font-family: 'Roboto', sans-serif;
   cursor: pointer;
   margin-right: 5px;
   margin-left: 5px;
+  margin-top: 25px;
   text-align: center;
 }
 
