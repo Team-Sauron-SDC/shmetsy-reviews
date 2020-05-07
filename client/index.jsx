@@ -21,6 +21,7 @@ class App extends React.Component {
       current: '',
       numProdRev: 0,
       avgShopRating: 0,
+      classProd: "testing",
     }
     this.filterProductReviews = this.filterProductReviews.bind(this);
     this.filterShopReviews = this.filterShopReviews.bind(this);
@@ -86,6 +87,7 @@ class App extends React.Component {
       prodReviews: prodRevs,
       onProd: true,
       counter: 1,
+      classProd: "testing"
     })
   }
 
@@ -188,9 +190,9 @@ class App extends React.Component {
 
 
 
+
   render() {
-    return (<div>
-      <h1>Review List Component</h1>
+    return (<div className="reviews-container">
       <ReviewList
       reviews={this.state.displayed}
       current={this.state.current}
@@ -202,6 +204,7 @@ class App extends React.Component {
       next={this.onNextReviews}
       previous={this.onPreviousReviews}
       page={this.state.counter}
+      classy={this.state.classProd}
       />
     </div>)
   }

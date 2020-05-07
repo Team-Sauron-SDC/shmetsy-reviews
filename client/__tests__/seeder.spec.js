@@ -1,0 +1,1 @@
+const seeder = require('../../server/seeder.js');
