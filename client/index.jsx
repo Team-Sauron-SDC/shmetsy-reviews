@@ -21,12 +21,16 @@ class App extends React.Component {
       current: '',
       numProdRev: 0,
       avgShopRating: 0,
-      classProd: "testing",
+      classProd: "selected",
+      classShop: "unselected",
+      last: 0,
     }
     this.filterProductReviews = this.filterProductReviews.bind(this);
     this.filterShopReviews = this.filterShopReviews.bind(this);
     this.onNextReviews = this.onNextReviews.bind(this);
     this.onPreviousReviews = this.onPreviousReviews.bind(this);
+    this.onPageOneClick = this.onPageOneClick.bind(this);
+    this.onLastPageClick = this.onLastPageClick.bind(this);
   }
 
   componentDidMount() {
@@ -78,6 +82,7 @@ class App extends React.Component {
         prodRevs.push(rev);
       }
     });
+    let max = Math.floor(prodRevs.length / 4) + 1;
     this.setState({
       reviews: prodRevs,
       numProdRev: prodRevs.length,
@@ -87,18 +92,24 @@ class App extends React.Component {
       prodReviews: prodRevs,
       onProd: true,
       counter: 1,
-      classProd: "testing"
+      classProd: "selected",
+      classShop: "unselected",
+      last: max,
     })
   }
 
   filterShopReviews() {
     const shopRevs = this.state.shopReviews;
+    let max = Math.floor(shopRevs.length / 4) + 1;
     this.setState({
       displayed: shopRevs.slice(0,4),
       sIndex: 0,
       eIndex: 4,
       onProd: false,
       counter: 1,
+      classShop: "selected",
+      classProd: "unselected",
+      last: max
     })
   }
 
@@ -119,6 +130,7 @@ class App extends React.Component {
       let counter = this.state.counter;
       let productRevLength = this.state.prodReviews.length;
       let maxPresses = Math.floor(productRevLength / 4);
+      console.log(maxPresses);
       if(counter <= maxPresses) {
         let start = this.state.sIndex + 4;
         let end = this.state.eIndex + 4;
@@ -186,6 +198,75 @@ class App extends React.Component {
     }
   }
 
+  onPageOneClick () {
+    if(this.state.onProd === true) {
+        let first = this.state.prodReviews.slice(0, 4);
+        this.setState({
+          counter: 1,
+          sIndex: 0,
+          eIndex: 4,
+          displayed: first,
+        })
+      } else {
+        let first = this.state.shopReviews.slice(0, 4);
+        this.setState( {
+          counter: 1,
+          sIndex: 0,
+          eIndex: 4,
+          displayed: first,
+        })
+      }
+    }
+
+    onLastPageClick () {
+      if(this.state.onProd === true) {
+        let test = 4 * this.state.last;
+        let end = this.state.prodReviews.length;
+        let start = end % 4;
+        let evenLast = this.state.prodReviews.slice(end - 4, end);
+        let last = this.state.prodReviews.slice(end - start, test);
+        let lastPage = Math.floor(end / 4) + 1;
+        if(start !== 0) {
+          this.setState({
+            counter: lastPage,
+            sIndex: test - 4,
+            eIndex: test,
+            displayed: last,
+          })
+        } else {
+          this.setState({
+            counter: lastPage,
+            sIndex: end - 4,
+            eIndex: end,
+            displayed: evenLast,
+          })
+        }
+
+      } else {
+        let test = 4 * this.state.last;
+        let end = this.state.shopReviews.length;
+        let start = end % 4;
+        let evenLast = this.state.shopReviews.slice(end - 4, end);
+        let last = this.state.shopReviews.slice(end - start, test);
+        let lastPage = Math.floor(end / 4) + 1;
+        if(start !== 0) {
+          this.setState({
+            counter: lastPage,
+            sIndex: test - 4,
+            eIndex: test,
+            displayed: last,
+          })
+        } else {
+          this.setState({
+            counter: lastPage,
+            sIndex: end - 4,
+            eIndex: end,
+            displayed: evenLast,
+          })
+        }
+      }
+    }
+
 
 
 
@@ -205,6 +286,10 @@ class App extends React.Component {
       previous={this.onPreviousReviews}
       page={this.state.counter}
       classy={this.state.classProd}
+      unselected={this.state.classShop}
+      last={this.state.last}
+      pageOne={this.onPageOneClick}
+      pageLast={this.onLastPageClick}
       />
     </div>)
   }

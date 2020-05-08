@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&display=swap');
+
 .container-one {
   display: flex;
   justify-content: flex-start;
   align-items: stretch;
   margin-bottom: 15px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .container-two {
@@ -10,6 +13,7 @@
   align-items: center;
   margin-bottom: 15px;
   margin-left: 0;
+  font-family: 'Roboto', sans-serif;
   border-bottom: 2px solid rgba(34, 34, 34, 0.15);
 }
 
@@ -19,19 +23,24 @@
 }
 
 .review {
-margin-bottom: 30px;
+margin-bottom: 100px;
 margin-left: 43px;
+font-family: 'Roboto', sans-serif;
+font-weight: 400;
 }
 
 .date {
   font-weight: 100;
   color: rgb(22, 22, 22);
   margin-left: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .heading {
   font-size: 26px;
   padding-right: 5px;
+  font-weight: 300;
 }
 
 .head-star {
@@ -57,15 +66,24 @@ margin-left: 43px;
   outline: none;
 }
 
-.rev-button:hover {
-  border-bottom: 2px solid black;
-  margin-bottom: -2px;
+.shop-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 12px 0;
+  margin: 0 12px;
+  margin-left: 13px;
+  font-size: 16px;
+  outline: none;
 }
+
 
 .individual-rating {
   margin-left: 42px;
   margin-top: 7px;
-  margin-bottom: 6px;
+  margin-bottom: 15px;
+  font-size: 18px;
 }
 
 .user-icon {
@@ -89,6 +107,11 @@ margin-left: 43px;
   cursor: pointer;
 }
 
+.dots {
+  font-family: 'Roboto', sans-serif;
+  display: inline-block;
+}
+
 .wt {
   background-color: rgb(235, 235, 235);
   border-radius: 50px;
@@ -106,11 +129,12 @@ margin-left: 43px;
 }
 
 .wt-page {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(224, 224, 224);
+  font-family: 'Roboto', sans-serif;
   display: inline-block;
   border-radius: 50px;
   line-height: 20px;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: bold;
   padding: 10px;
   width: 18px;
@@ -118,26 +142,44 @@ margin-left: 43px;
   cursor: pointer;
   margin-right: 5px;
   margin-left: 5px;
+  margin-top: 25px;
   text-align: center;
 }
 
-.testing{
-  margin-right: 15px;
+.dark {
+  background-color: grey;
 }
 
-.blue {
-  background-color: lightblue;
+.dark:hover {
+  background-color: grey;
 }
 
-.testing:hover {
-  margin-bottom: -2px;
+.selected {
+
   border-bottom: 2px solid black;
+  margin-bottom: -2px;
 }
+
+.empty {
+  margin-left: 12px;
+  margin-right: 10px;
+}
+
+
+
+.unselected:hover {
+  border-bottom: 2px solid grey;
+  margin-bottom: -2px;
+}
+
+
 
 .username {
   margin-right: 5px;
   transition: color 0.5s;
   text-decoration: underline;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
 }
 
 .username:hover {
@@ -145,5 +187,4 @@ margin-left: 43px;
   cursor: pointer;
 
 }
-
 
