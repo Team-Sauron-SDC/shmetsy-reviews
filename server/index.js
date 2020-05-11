@@ -4,12 +4,10 @@ const app = express();
 const bodyParser = require('body-parser');
 const env = require('dotenv').config();
 const db = require('mysql');
+app.use(express.static(path.join(__dirname, '/../public'));
 app.use("/:id", express.static(__dirname + '/../public'));
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({
-//   extended: true,
-// }));
-const port = 3000;
+const port = 5000;
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
 const connection = db.createConnection({
@@ -35,15 +33,12 @@ app.get('/reviews/:id', (req, res) => {
   console.log(req.params);
   const id = req.params.id;
   getProductReviews(id,(data) => {
-    // console.log("heres the data", data[1]);
     const shop = data[1].shopID;
-    // console.log(shop);
     getShopReviews(shop, (results) => {
       let unsorted = [];
-      for(var i =0 ; i < results.length; i ++) {
+      for(var i = 0; i < results.length; i ++) {
         unsorted.push(results[i]);
       }
-      // console.log(sorted);
       const sorted = unsorted.sort((a,b) => b.reviewDate - a.reviewDate);
       res.status(200).send(sorted);
     })
