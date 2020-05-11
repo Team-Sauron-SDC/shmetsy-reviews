@@ -52,7 +52,7 @@ font-weight: 400;
 .reviews-container {
   box-sizing: border-box;
   margin: 0;
-  width: 60%;
+  width: 100%;
 }
 
 .rev-button {

@@ -4,18 +4,15 @@ const app = express();
 const bodyParser = require('body-parser');
 const env = require('dotenv').config();
 const db = require('mysql');
-app.use(express.static(path.join(__dirname, '/../public'));
+const path = require('path');
+const config = require('./sqlconfig.js');
+app.use(express.static(path.join(__dirname, '/../public')));
 app.use("/:id", express.static(__dirname + '/../public'));
 app.use(bodyParser.json());
 const port = 5000;
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
-const connection = db.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: 'reviewList',
-});
+const connection = db.createConnection(config);
 
 connection.connect(err => {
   if(err) {
@@ -23,10 +20,6 @@ connection.connect(err => {
   } else {
     console.log("DB connected!");
   }
-});
-
-app.get('/', (req, res) => {
-  res.redirect('/1');
 });
 
 app.get('/reviews/:id', (req, res) => {
