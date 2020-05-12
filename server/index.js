@@ -6,10 +6,13 @@ const env = require('dotenv').config();
 const db = require('mysql');
 const path = require('path');
 const config = require('./sqlconfig.js');
+const cors = require('cors');
+app.use(cors());
 app.use(express.static(path.join(__dirname, '/../public')));
 app.use("/:id", express.static(__dirname + '/../public'));
 app.use(bodyParser.json());
 const port = 5000;
+const host = '0.0.0.0';
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
 const connection = db.createConnection(config);
