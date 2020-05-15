@@ -1,6 +1,7 @@
 import React from 'react';
 import ReviewListEntry from './ReviewListEntry.jsx';
 import Rating from 'react-rating';
+import listStyles from './ReviewList.module.css';
 
 const ReviewList = ({reviews, current, total, shop, filterProductReviews, filterShopReviews, avg, next, previous, page, classy, unselected, last, pageOne, pageLast}) => {
   return (
