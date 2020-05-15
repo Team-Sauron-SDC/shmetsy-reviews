@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400&display=swap');
 
+/* list css */
+
 .container-one {
   display: flex;
   justify-content: flex-start;
@@ -116,3 +118,51 @@
 .dark:hover {
   background-color: grey;
 }
+
+/* list entry CSS */
+
+.entry-container {
+  display: flex;
+  align-items: center;
+}
+
+.user-icon {
+  height: 35px;
+  width: 35px;
+  margin-right: 8px;
+}
+
+.username {
+  margin-right: 5px;
+  transition: color 0.5s;
+  text-decoration: underline;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+.username:hover {
+  color: rgb(172, 171, 171);
+  cursor: pointer;
+}
+
+.date {
+  font-weight: 100;
+  color: rgb(22, 22, 22);
+  margin-left: 5px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+.individual-rating {
+  margin-left: 42px;
+  margin-top: 7px;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.review {
+  margin-bottom: 100px;
+  margin-left: 43px;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  }
