@@ -1,16 +1,14 @@
 const db = require('mysql');
 const config = require('../server/sqlconfig.js');
 
-// const connection = db.createConnection(config);
+const connection = db.createConnection(config);
 
-
-
-const connection = db.createConnection({
-  host: 'database-1.clczllep9gvm.us-east-2.rds.amazonaws.com',
-  user: 'admin',
-  password: 'gh3456adswere',
-  database: 'reviewList'
-});
+// const connection = db.createConnection({
+//   host: 'database-1.clczllep9gvm.us-east-2.rds.amazonaws.com',
+//   user: 'admin',
+//   password: 'gh3456adswere',
+//   database: 'reviewList'
+// });
 
 connection.connect(err => {
   if(err) {
