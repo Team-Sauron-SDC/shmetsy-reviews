@@ -1,44 +1,96 @@
 /* eslint-disable linebreak-style */
-const express = require('express');
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+
+const {
+  env,
+  express,
+  path,
+  bodyParser,
+  cors,
+  mysql,
+  config,
+  db,
+} = require('./imports');
+
 const app = express();
-const bodyParser = require('body-parser');
-const env = require('dotenv').config();
-const path = require('path');
-const config = require('./sqlconfig.js');
-const cors = require('cors');
-const db = require('../database/index.js');
-const mysql = require('mysql');
+
 app.use(cors());
 app.use(express.static(path.join(__dirname, '/../public')));
-app.use("/:id", express.static(__dirname + '/../public'));
+app.use('/:id', express.static(`${__dirname}/../public`));
 app.use(bodyParser.json());
-const port = 5000;
-const host = '0.0.0.0';
-app.listen(port, host, () => console.log(`App is listening at http://localhost:${host}:${port}`));
 
+const port = 5000;
+app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
 const connection = mysql.createConnection(config);
 
-connection.connect(err => {
-  if(err) {
-    throw err;
-  } else {
-    console.log("DB connected!");
-  }
+connection.connect((err) => {
+  if (err) throw err;
+  console.log('DB connected!');
 });
 
-app.get('/reviews/:id', (req, res) => {
-  console.log(req.params);
-  const id = req.params.id;
-  db.getProductReviews(id,(data) => {
-    const shop = data[1].shopID;
-    db.getShopReviews(shop, (results) => {
-      let unsorted = [];
-      for(var i = 0; i < results.length; i ++) {
-        unsorted.push(results[i]);
-      }
-      const sorted = unsorted.sort((a,b) => b.reviewDate - a.reviewDate);
-      res.status(200).send(sorted);
-    })
-  })
+app.post('/api/reviews/', (req, res) => {
+  db.insertReviews(req.body, (err, results) => {
+    if (err) {
+      res.status(404);
+      res.end();
+      throw err;
+    }
+    res.status(201);
+    res.end();
+  });
+});
+
+app.get('/api/reviews/:id', (req, res) => {
+  const { id } = req.params;
+  db.getProductReviews(id, (err, data) => {
+    if (err) {
+      res.status(404);
+      res.end();
+      console.log(err);
+    } else {
+      const shop = data[1].shopID;
+      db.getShopReviews(shop, (shopErr, results) => {
+        if (shopErr) {
+          res.status(404);
+          res.end();
+          console.log(shopErr);
+        } else {
+          const unsorted = [];
+          for (let i = 0; i < results.length; i += 1) {
+            unsorted.push(results[i]);
+          }
+          const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
+          res.status(200).send(sorted);
+        }
+      });
+    }
+  });
+});
+
+app.patch('/api/reviews/:id', (req, res) => {
+  const { id } = req.params;
+  db.updateReview({ entry: req.body, id }, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(404);
+      res.end();
+    }
+    res.status(204);
+    res.end();
+  });
+});
+
+app.delete('/api/reviews/:id', (req, res) => {
+  const { id } = req.params;
+  db.deleteReview(id, (err, results) => {
+    if (err) {
+      console.log(err);
+      res.status(404);
+      res.end();
+    }
+    res.status(204);
+    res.end();
+  });
 });

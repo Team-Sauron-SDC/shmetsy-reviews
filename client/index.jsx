@@ -34,17 +34,21 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const uniqueID = window.location.pathname.substring(1,2);
+    let newPath = '';
+    for(var i = 0; i < window.location.pathname.length; i ++) {
+      if(window.location.pathname[i] !== "/") {
+        newPath += window.location.pathname[i];
+      }
+    }
     this.setState({
-      current: uniqueID
+      current: newPath,
     }, () => {
       this.getReviews();
     });
-
   }
 
   getReviews() {
-    axios.get(`/reviews/${this.state.current}`)
+    axios.get(`/api/reviews/${this.state.current}`)
       .then(res => {
         this.setState({
           reviews: res.data,
@@ -267,31 +271,28 @@ class App extends React.Component {
       }
     }
 
-
-
-
-
-
   render() {
-    return (<div className="reviews-container">
-      <ReviewList
-      reviews={this.state.displayed}
-      current={this.state.current}
-      total={this.state.len}
-      shop={this.state.numProdRev}
-      filterProductReviews={this.filterProductReviews}
-      filterShopReviews={this.filterShopReviews}
-      avg={this.state.avgShopRating}
-      next={this.onNextReviews}
-      previous={this.onPreviousReviews}
-      page={this.state.counter}
-      classy={this.state.classProd}
-      unselected={this.state.classShop}
-      last={this.state.last}
-      pageOne={this.onPageOneClick}
-      pageLast={this.onLastPageClick}
-      />
-    </div>)
+    return (
+      <div className="reviews-container">
+        <ReviewList
+          reviews={this.state.displayed}
+          current={this.state.current}
+          total={this.state.len}
+          shop={this.state.numProdRev}
+          filterProductReviews={this.filterProductReviews}
+          filterShopReviews={this.filterShopReviews}
+          avg={this.state.avgShopRating}
+          next={this.onNextReviews}
+          previous={this.onPreviousReviews}
+          page={this.state.counter}
+          classy={this.state.classProd}
+          unselected={this.state.classShop}
+          last={this.state.last}
+          pageOne={this.onPageOneClick}
+          pageLast={this.onLastPageClick}
+        />
+      </div>
+    );
   }
 
 };
