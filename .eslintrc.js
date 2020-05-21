@@ -12,7 +12,7 @@
 module.exports = {
   extends: 'airbnb-base',
   rules: {
-    no-console: 'off'
+    // no-console: 'off'
   },
   // parser: "babel-eslint"
 };

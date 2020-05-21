@@ -10,24 +10,25 @@ const connection = db.createConnection(config);
 //   database: 'reviewList'
 // });
 
-connection.connect(err => {
-  if(err) {
+connection.connect((err) => {
+  if (err) {
     throw err;
   } else {
-    console.log("DB connected!");
+    // eslint-disable-next-line no-console
+    console.log('DB connected!');
   }
 });
 
-const getProductReviews = (id, callback)  => {
-  let queryStr = `SELECT * from reviews where productID = ${id}`;
+const getProductReviews = (id, callback) => {
+  const queryStr = `SELECT * from reviews where productID = ${id}`;
   connection.query(queryStr, (err, docs) => {
     if (err) {
       callback(err);
     } else {
       callback(docs);
     }
-  })
-}
+  });
+};
 
 const getShopReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where shopID = ${id}`;
@@ -37,10 +38,26 @@ const getShopReviews = (id, callback) => {
     } else {
       callback(docs);
     }
-  })
-}
+  });
+};
+
+const insertReviews = (req, callback) => {
+  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)';
+  const {
+    user, rating, reviewDate, review, productID, shopID,
+  } = req.body;
+  const params = [user, rating, reviewDate, review, productID, shopID];
+  connection.query(queryStr, params, (err, result) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
+};
 
 module.exports = {
   getProductReviews,
   getShopReviews,
-}
+  insertReviews,
+};

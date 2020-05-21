@@ -34,13 +34,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    const uniqueID = window.location.pathname.substring(1,2);
+    let newPath = '';
+    for(var i = 0; i < window.location.pathname.length; i ++) {
+      if(window.location.pathname[i] !== "/") {
+        newPath += window.location.pathname[i];
+      }
+    }
     this.setState({
-      current: uniqueID
+      current: newPath,
     }, () => {
       this.getReviews();
     });
-
   }
 
   getReviews() {
