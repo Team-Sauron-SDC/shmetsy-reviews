@@ -7,6 +7,11 @@ COPY package*.json ./
 
 RUN  npm install
 RUN  npm install -g grunt-cli
+# RUN  npm install grunt-shell
+RUN  apt update
+RUN  apt install nano
+# RUN  apt install git
+
 COPY . .
 
 ENV PORT=5000
