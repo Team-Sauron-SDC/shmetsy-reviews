@@ -26,8 +26,11 @@ app.listen(port, () => console.log(`App is listening at http://localhost:${port}
 const connection = mysql.createConnection(config);
 
 connection.connect((err) => {
-  if (err) throw err;
-  console.log('DB connected!');
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('DB connected!');
+  }
 });
 
 app.post('/api/reviews/', (req, res) => {

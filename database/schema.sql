@@ -1,8 +1,12 @@
+-- CREATE USER 'monty'@'localhost' IDENTIFIED BY 'password';
+-- GRANT ALL PRIVILEGES ON *.* TO 'mysql'@'database' IDENTIFIED BY 'password'
+
 DROP DATABASE IF EXISTS reviewList;
 
 CREATE DATABASE reviewList;
 
 USE reviewList;
+
 
 CREATE TABLE reviews (
   id integer NOT NULL AUTO_INCREMENT,
