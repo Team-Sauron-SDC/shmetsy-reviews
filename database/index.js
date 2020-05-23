@@ -1,5 +1,5 @@
 /* eslint-disable no-multi-str */
-const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'postgres',

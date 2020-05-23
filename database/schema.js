@@ -2,7 +2,7 @@
 const fs = require('fs');
 const faker = require('faker');
 
-const { Pool, Client } = require('pg');
+const { Pool } = require('pg');
 
 const pool = new Pool({
   user: 'postgres',
