@@ -13,7 +13,7 @@ connection.connect((err) => {
   }
 });
 
-const getProductReviews = (id, callback) => {
+const readProductReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where productID = ${id}`;
   connection.query(queryStr, (err, docs) => {
     if (err || docs.length === 0) {
@@ -24,7 +24,7 @@ const getProductReviews = (id, callback) => {
   });
 };
 
-const getShopReviews = (id, callback) => {
+const readShopReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where shopID = ${id}`;
   connection.query(queryStr, (err, docs) => {
     if (err) {
@@ -35,7 +35,7 @@ const getShopReviews = (id, callback) => {
   });
 };
 
-const insertReviews = (entry, callback) => {
+const createReviews = (entry, callback) => {
   const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)';
   const {
     username, rating, reviewDate, review, productID, shopID,
@@ -80,9 +80,9 @@ const deleteReview = (id, callback) => {
 };
 
 module.exports = {
-  getProductReviews,
-  getShopReviews,
-  insertReviews,
+  readProductReviews,
+  readShopReviews,
+  createReviews,
   updateReview,
   deleteReview,
 };
