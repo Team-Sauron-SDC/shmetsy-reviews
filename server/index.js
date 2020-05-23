@@ -23,13 +23,6 @@ app.use(bodyParser.json());
 const port = 5000;
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
-const connection = mysql.createConnection(config);
-
-connection.connect((err) => {
-  if (err) throw err;
-  console.log('DB connected!');
-});
-
 app.post('/api/reviews/', (req, res) => {
   db.insertReviews(req.body, (err, results) => {
     if (err) {
@@ -50,17 +43,22 @@ app.get('/api/reviews/:id', (req, res) => {
       res.end();
       console.log(err);
     } else {
-      const shop = data[1].shopID;
-      db.getShopReviews(shop, (shopErr, results) => {
+      const shop = data.rows[0].shopid;
+      db.getShopReviews(shop, (shopErr, returned) => {
+        const results = returned.rows;
         if (shopErr) {
           res.status(404);
           res.end();
           console.log(shopErr);
         } else {
-          const unsorted = [];
+          const ids = new Set(data.rows.map((review) => review.id));
+          let unsorted = new Set([...data.rows]);
           for (let i = 0; i < results.length; i += 1) {
-            unsorted.push(results[i]);
+            if (!ids.has(results[i].id)) {
+              unsorted.add(results[i]);
+            }
           }
+          unsorted = Array.from(unsorted);
           const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
           res.status(200).send(sorted);
         }
