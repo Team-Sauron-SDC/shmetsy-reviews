@@ -2,8 +2,8 @@
 /* eslint-disable no-multi-str */
 const cassandra = require('cassandra-driver');
 
-const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
-const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
+const tempClient = new cassandra.Client({ contactPoints: ['db'], localDataCenter: 'datacenter1', keyspace: 'system' });
+const client = new cassandra.Client({ contactPoints: ['db'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
 tempClient.connect()
   .then(() => {
     const create = "CREATE KEYSPACE IF NOT EXISTS sauron_sdc WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' }AND DURABLE_WRITES =  true;";
@@ -13,8 +13,11 @@ tempClient.connect()
     client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
   })
   .then(() => {
-    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID))';
+    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.reviews (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID)) with clustering order by (productid DESC) ';
     return client.execute(createTable);
+  })
+  .then(() => {
+    // create index on -> id? productid?, shopID?
   })
   .catch((err) => console.log('Cannot Connect to Cassandra!', err));
 
