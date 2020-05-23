@@ -1,12 +1,26 @@
+/* eslint-disable no-console */
 /* eslint-disable no-multi-str */
 const cassandra = require('cassandra-driver');
 
-const client = new cassandra.Client({ contactPoints: ['localhost'] });
-// , localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
+const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
+const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
+tempClient.connect()
+  .then(() => {
+    const create = "CREATE KEYSPACE IF NOT EXISTS sauron_sdc WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' }AND DURABLE_WRITES =  true;";
+    return tempClient.execute(create);
+  })
+  .then(() => {
+    client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
+  })
+  .then(() => {
+    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID))';
+    return client.execute(createTable);
+  })
+  .catch((err) => console.log('Cannot Connect to Cassandra!', err));
 
-const getProductReviews = (id, callback) => {
+const readProductReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where productid = ${id}`;
-  client.query(queryStr, (err, results) => {
+  client.execute(queryStr, (err, results) => {
     if (err || results.length === 0) {
       callback(err || 'empty set');
     } else {
@@ -15,9 +29,9 @@ const getProductReviews = (id, callback) => {
   });
 };
 
-const getShopReviews = (id, callback) => {
+const readShopReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
-  client.query(queryStr, (err, results) => {
+  client.execute(queryStr, (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -26,13 +40,13 @@ const getShopReviews = (id, callback) => {
   });
 };
 
-const insertReviews = (entry, callback) => {
-  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
+const createReviews = (entry, callback) => {
+  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?) RETURNING *';
   const {
     username, rating, reviewDate, review, productID, shopID,
   } = entry;
   const params = [username, rating, reviewDate, review, productID, shopID];
-  client.query(queryStr, params, (err, result) => {
+  client.execute(queryStr, params, (err, result) => {
     if (err) {
       callback(err);
     } else {
@@ -52,7 +66,7 @@ const updateReview = (data, callback) => {
   }
   query = query.slice(0, query.length - 2);
   query += ` WHERE id = '${id}'`;
-  client.query(query, (err, result) => {
+  client.execute(query, (err, result) => {
     if (err) {
       callback(err, result);
     }
@@ -62,7 +76,7 @@ const updateReview = (data, callback) => {
 
 const deleteReview = (id, callback) => {
   const query = `DELETE FROM reviews WHERE id = '${id}'`;
-  client.query(query, (err, result) => {
+  client.execute(query, (err, result) => {
     if (err) {
       callback(err);
     }
@@ -71,9 +85,5 @@ const deleteReview = (id, callback) => {
 };
 
 module.exports = {
-  getProductReviews,
-  getShopReviews,
-  insertReviews,
-  updateReview,
-  deleteReview,
+  client, createReviews, readProductReviews, readShopReviews, updateReview, deleteReview,
 };

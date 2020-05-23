@@ -17,7 +17,7 @@ const port = 5000;
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
 app.post('/api/reviews/', (req, res) => {
-  db.insertReviews(req.body, (err, results) => {
+  db.createReviews(req.body, (err, results) => {
     if (err) {
       res.status(404);
       res.end();
@@ -30,7 +30,7 @@ app.post('/api/reviews/', (req, res) => {
 
 app.get('/api/reviews/:id', (req, res) => {
   const { id } = req.params;
-  db.getProductReviews(id, (err, data) => {
+  db.readProductReviews(id, (err, data) => {
     // data should be an array of reviews of product ${id}
     if (err) {
       res.status(404);
@@ -38,7 +38,7 @@ app.get('/api/reviews/:id', (req, res) => {
       console.log(err);
     } else {
       const shop = data[0].shopid;
-      db.getShopReviews(shop, (shopErr, results) => {
+      db.readShopReviews(shop, (shopErr, results) => {
         if (shopErr) {
           res.status(404);
           res.end();

@@ -9,7 +9,7 @@ const pool = new Pool({
   port: 5432,
 });
 
-const getProductReviews = (id, callback) => {
+const readProductReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where productid = ${id}`;
   pool.query(queryStr, (err, results) => {
     if (err || results.length === 0) {
@@ -20,7 +20,7 @@ const getProductReviews = (id, callback) => {
   });
 };
 
-const getShopReviews = (id, callback) => {
+const readShopReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
   pool.query(queryStr, (err, results) => {
     if (err) {
@@ -31,7 +31,7 @@ const getShopReviews = (id, callback) => {
   });
 };
 
-const insertReviews = (entry, callback) => {
+const createReviews = (entry, callback) => {
   const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
   const {
     username, rating, reviewDate, review, productID, shopID,
@@ -76,9 +76,5 @@ const deleteReview = (id, callback) => {
 };
 
 module.exports = {
-  getProductReviews,
-  getShopReviews,
-  insertReviews,
-  updateReview,
-  deleteReview,
+  createReviews, readProductReviews, readShopReviews, updateReview, deleteReview,
 };

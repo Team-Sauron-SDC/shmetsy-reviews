@@ -5,7 +5,6 @@ const cassandra = require('cassandra-driver');
 
 const tempClient = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'system' });
 const client = new cassandra.Client({ contactPoints: ['localhost'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
-
 const connectAndCreate = () => tempClient.connect()
   .then(() => {
     const create = "CREATE KEYSPACE IF NOT EXISTS sauron_sdc WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' }AND DURABLE_WRITES =  true;";
@@ -15,24 +14,10 @@ const connectAndCreate = () => tempClient.connect()
     client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
   })
   .then(() => {
-    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (shopID int, shopName text, shopDate text, shopSales int, shopLoc text, shopURL text, shopItems int, productID int, productName text, productPrice text, productShipping text, productUrl text, PRIMARY KEY(shopID, productID))';
-
+    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.products_by_shop (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID))';
     return client.execute(createTable);
   })
   .catch((err) => console.log('Cannot Connect to Cassandra!', err));
-
-const doAll = () => connectAndCreate()
-  .then(() => {
-    seed.dataGen(seed.writeData, 'utf-8', () => {
-      seed.writeData.end();
-      const ending = new Date().getTime() - seed.start.getTime();
-      console.log(`Seeding Completed! It took: ${Math.floor(ending / 60000)}mins and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-    });
-  })
-  .catch((err) => console.log('Connection or Seeding Error!', err));
-
-doAll();
-
 
 const gen = () => {
   const username = faker.name.findName();
@@ -80,15 +65,20 @@ const dataGen = (writer, encoding, callback) => {
   write();
 };
 
-dataGen(writeData, 'utf-8', () => {
-  writeData.end();
-  pool.query('COPY reviews(username, rating, reviewdate, review, productid, shopid) FROM \'/Users/carlitoswillis/local/hr/sdc-system-design-capstone/reviews/data.csv\' DELIMITER \',\' CSV HEADER', (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('copying data into reviews');
-    }
-  });
-  const ending = new Date().getTime() - start.getTime();
-  console.log(`Seeding Complete! It took: ${Math.floor(ending / 60000)}m and ${((ending % 60000) / 1000).toFixed(0)}secs`);
-});
+
+connectAndCreate()
+  .then(() => {
+    dataGen(writeData, 'utf-8', () => {
+      writeData.end();
+      client.execute('COPY reviews(username, rating, reviewdate, review, productid, shopid) FROM \'/Users/carlitoswillis/local/hr/sdc-system-design-capstone/reviews/data.csv\' DELIMITER \',\' CSV HEADER', (err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('copying data into reviews');
+        }
+      });
+      const ending = new Date().getTime() - start.getTime();
+      console.log(`Seeding Complete! It took: ${Math.floor(ending / 60000)}m and ${((ending % 60000) / 1000).toFixed(0)}secs`);
+    });
+  })
+  .catch((err) => console.log('Connection or Seeding Error!', err));
