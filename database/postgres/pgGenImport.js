@@ -33,7 +33,7 @@ const writeData = fs.createWriteStream('data.csv', {
 writeData.write('username, rating, reviewdate, review, productid, shopid\n', 'utf8');
 
 const dataGen = (writer, encoding, callback) => {
-  let i = 10000000;
+  let i = 10;
   let productid = 1;
   function write() {
     let ok = true;

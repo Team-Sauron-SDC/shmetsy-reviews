@@ -1,12 +1,3 @@
--- CREATE USER 'monty'@'localhost' IDENTIFIED BY 'password';
--- GRANT ALL PRIVILEGES ON *.* TO 'mysql'@'database' IDENTIFIED BY 'password'
-
--- DROP DATABASE IF EXISTS reviewList;
-
--- CREATE DATABASE reviewList;
-
--- USE reviewList;
-
 DROP TABLE reviews;
 
 CREATE TABLE reviews (

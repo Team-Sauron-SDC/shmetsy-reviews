@@ -1,4 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-const go = require('./schema.js', () => {
+const go = require('./pgGenImport.js', () => {
   console.log('done');
 });
