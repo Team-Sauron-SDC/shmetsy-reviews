@@ -25,6 +25,8 @@ coverage
 build/
 dist/
 build.js
+report.json
+
 /.env
 /server/sqlconfig.js
 /public/bundle.js
