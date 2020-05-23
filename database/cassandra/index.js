@@ -13,7 +13,7 @@ tempClient.connect()
     client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
   })
   .then(() => {
-    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.reviews (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID)) with clustering order by (productid DESC) ';
+    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.reviews (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID))';
     return client.execute(createTable);
   })
   .then(() => {
