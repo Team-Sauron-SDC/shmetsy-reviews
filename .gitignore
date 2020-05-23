@@ -28,7 +28,7 @@ build.js
 report.json
 
 /.env
-/server/sqlconfig.js
+sqlconfig.js
 /public/bundle.js
 /awscliv2.zip
 /aws/install

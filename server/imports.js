@@ -7,7 +7,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql');
-const config = require('./sqlconfig.js');
+const config = require('../database/mysql/sqlconfig.js');
 const db = require('../database/index.js');
 
 module.exports = {
