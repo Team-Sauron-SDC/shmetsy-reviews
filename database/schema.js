@@ -2,6 +2,16 @@
 const fs = require('fs');
 const faker = require('faker');
 
+const { Pool, Client } = require('pg');
+
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'reviewsdb',
+  password: '',
+  port: 5432,
+});
+
 const gen = () => {
   const username = faker.name.findName();
   const rating = faker.random.number({ min: 0, max: 5 });
@@ -50,6 +60,13 @@ const dataGen = (writer, encoding, callback) => {
 
 dataGen(writeData, 'utf-8', () => {
   writeData.end();
+  pool.query('COPY reviews(username, rating, reviewdate, review, productid, shopid) FROM \'/Users/carlitoswillis/local/hr/sdc-system-design-capstone/reviews/data.csv\' DELIMITER \',\' CSV HEADER', (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('copying data into reviews');
+    }
+  });
   const ending = new Date().getTime() - start.getTime();
   console.log(`Seeding Complete! It took: ${Math.floor(ending / 60000)}m and ${((ending % 60000) / 1000).toFixed(0)}secs`);
 });
