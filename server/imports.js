@@ -11,12 +11,5 @@ const config = require('../database/mysql/sqlconfig.js');
 const db = require('../database/index.js');
 
 module.exports = {
-  env,
-  express,
-  path,
-  bodyParser,
-  cors,
-  mysql,
-  config,
-  db,
+  env, express, path, bodyParser, cors, mysql, config, db,
 };

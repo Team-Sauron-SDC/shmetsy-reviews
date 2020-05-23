@@ -1,17 +1,12 @@
 /* eslint-disable no-multi-str */
-const { Pool } = require('pg');
+const cassandra = require('cassandra-driver');
 
-const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'reviewsdb',
-  password: '',
-  port: 5432,
-});
+const client = new cassandra.Client({ contactPoints: ['localhost'] });
+// , localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
 
 const getProductReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where productid = ${id}`;
-  pool.query(queryStr, (err, results) => {
+  client.query(queryStr, (err, results) => {
     if (err || results.length === 0) {
       callback(err || 'empty set');
     } else {
@@ -22,7 +17,7 @@ const getProductReviews = (id, callback) => {
 
 const getShopReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
-  pool.query(queryStr, (err, results) => {
+  client.query(queryStr, (err, results) => {
     if (err) {
       callback(err);
     } else {
@@ -37,7 +32,7 @@ const insertReviews = (entry, callback) => {
     username, rating, reviewDate, review, productID, shopID,
   } = entry;
   const params = [username, rating, reviewDate, review, productID, shopID];
-  pool.query(queryStr, params, (err, result) => {
+  client.query(queryStr, params, (err, result) => {
     if (err) {
       callback(err);
     } else {
@@ -57,7 +52,7 @@ const updateReview = (data, callback) => {
   }
   query = query.slice(0, query.length - 2);
   query += ` WHERE id = '${id}'`;
-  pool.query(query, (err, result) => {
+  client.query(query, (err, result) => {
     if (err) {
       callback(err, result);
     }
@@ -67,7 +62,7 @@ const updateReview = (data, callback) => {
 
 const deleteReview = (id, callback) => {
   const query = `DELETE FROM reviews WHERE id = '${id}'`;
-  pool.query(query, (err, result) => {
+  client.query(query, (err, result) => {
     if (err) {
       callback(err);
     }

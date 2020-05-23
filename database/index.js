@@ -1,2 +1,2 @@
 // choose db here
-module.exports = require('./mysql');
+module.exports = require('./postgres');

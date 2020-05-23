@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+    build: .
+    # environment:
+    #   MYSQL_DATABASE: reviewList
+    #   MYSQL_ROOT_PASSWORD: supersecret
+    #   MYSQL_USER: mysql
+    #   MYSQL_ROOT_PASSWORD: supersecret
+    #   DATABASE_HOST: localhost
+    ports:
+      - "9042:9042"
+  server:
+    build: ../../
+    # environment:
+    #   MYSQL_PORT: 3306
+    #   MYSQL_DATABASE: reviewList
+    #   MYSQL_USERTWO: root
+    #   MYSQL_PASSWORD: supersecret
+    #   DATABASE_HOST: localhost
+    ports:
+      - "5000:5000"
+    links:
+      - db:db
+    depends_on:
+      - db
+    restart: on-failure

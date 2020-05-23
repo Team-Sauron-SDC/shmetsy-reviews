@@ -3,14 +3,7 @@
 /* eslint-disable no-unused-vars */
 
 const {
-  env,
-  express,
-  path,
-  bodyParser,
-  cors,
-  mysql,
-  config,
-  db,
+  env, express, path, bodyParser, cors, mysql, config, db,
 } = require('./imports');
 
 const app = express();
@@ -38,21 +31,21 @@ app.post('/api/reviews/', (req, res) => {
 app.get('/api/reviews/:id', (req, res) => {
   const { id } = req.params;
   db.getProductReviews(id, (err, data) => {
+    // data should be an array of reviews of product ${id}
     if (err) {
       res.status(404);
       res.end();
       console.log(err);
     } else {
-      const shop = data.rows[0].shopid;
-      db.getShopReviews(shop, (shopErr, returned) => {
-        const results = returned.rows;
+      const shop = data[0].shopid;
+      db.getShopReviews(shop, (shopErr, results) => {
         if (shopErr) {
           res.status(404);
           res.end();
           console.log(shopErr);
         } else {
-          const ids = new Set(data.rows.map((review) => review.id));
-          let unsorted = new Set([...data.rows]);
+          const ids = new Set(data.map((review) => review.id));
+          let unsorted = new Set([...data]);
           for (let i = 0; i < results.length; i += 1) {
             if (!ids.has(results[i].id)) {
               unsorted.add(results[i]);
