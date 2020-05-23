@@ -1,21 +1,17 @@
 /* eslint-disable no-multi-str */
-const db = require('mysql');
-const config = require('../server/sqlconfig.js');
+const { Pool, Client } = require('pg');
 
-const connection = db.createConnection(config);
-
-connection.connect((err) => {
-  if (err) {
-    throw err;
-  } else {
-    // eslint-disable-next-line no-console
-    console.log('DB connected!');
-  }
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'reviewsdb',
+  password: '',
+  port: 5432,
 });
 
 const getProductReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews where productID = ${id}`;
-  connection.query(queryStr, (err, docs) => {
+  const queryStr = `SELECT * from reviews where productid = ${id}`;
+  pool.query(queryStr, (err, docs) => {
     if (err || docs.length === 0) {
       callback(err || 'empty set');
     } else {
@@ -25,8 +21,8 @@ const getProductReviews = (id, callback) => {
 };
 
 const getShopReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews where shopID = ${id}`;
-  connection.query(queryStr, (err, docs) => {
+  const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
+  pool.query(queryStr, (err, docs) => {
     if (err) {
       callback(err);
     } else {
@@ -36,12 +32,12 @@ const getShopReviews = (id, callback) => {
 };
 
 const insertReviews = (entry, callback) => {
-  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)';
+  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
   const {
     username, rating, reviewDate, review, productID, shopID,
   } = entry;
   const params = [username, rating, reviewDate, review, productID, shopID];
-  connection.query(queryStr, params, (err, result) => {
+  pool.query(queryStr, params, (err, result) => {
     if (err) {
       callback(err);
     } else {
@@ -61,7 +57,7 @@ const updateReview = (data, callback) => {
   }
   query = query.slice(0, query.length - 2);
   query += ` WHERE id = '${id}'`;
-  connection.query(query, (err, result) => {
+  pool.query(query, (err, result) => {
     if (err) {
       callback(err, result);
     }
@@ -71,7 +67,7 @@ const updateReview = (data, callback) => {
 
 const deleteReview = (id, callback) => {
   const query = `DELETE FROM reviews WHERE id = '${id}'`;
-  connection.query(query, (err, result) => {
+  pool.query(query, (err, result) => {
     if (err) {
       callback(err);
     }

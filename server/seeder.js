@@ -14,20 +14,15 @@ connection.connect((err) => {
   }
 });
 
-for (let i = 0; i < 5000; i += 1) {
+for (let i = 0; i < 1000000; i += 1) {
   const user = faker.name.findName();
   const rating = faker.random.number({ min: 0, max: 5 });
-  const reviewDate = faker.date.between('2020-01-01', '2020-04-21');
+  const reviewdate = faker.date.between('2012-01-01', '2020-04-21');
   const review = faker.lorem.sentences();
-  const productID = faker.random.number({ min: 2, max: 100 });
-  const shopID = faker.random.number({ min: 1, max: 10 });
+  const productid = faker.random.number({ min: 2, max: 100 });
+  const shopid = faker.random.number({ min: 1, max: 10 });
   const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES (?,?,?,?,?,?)';
-  const params = [user, rating, reviewDate, review, productID, shopID];
-  connection.query(queryStr, params, (err) => {
-    if (err) {
-      throw (err);
-    }
-  });
+  const params = [user, rating, reviewdate, review, productid, shopid];
 }
 
 connection.end();

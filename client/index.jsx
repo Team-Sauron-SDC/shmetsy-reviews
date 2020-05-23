@@ -50,6 +50,7 @@ class App extends React.Component {
   getReviews() {
     axios.get(`/api/reviews/${this.state.current}`)
       .then(res => {
+        console.log(res.data);
         this.setState({
           reviews: res.data,
           shopReviews: res.data,
@@ -82,7 +83,7 @@ class App extends React.Component {
     const allRevs = this.state.reviews;
     const curr = this.state.current;
     allRevs.forEach(rev => {
-      if (rev.productID == curr) {
+      if (rev.productid == curr) {
         prodRevs.push(rev);
       }
     });
