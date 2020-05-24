@@ -1,5 +1,3 @@
-DROP TABLE reviews;
-
 CREATE TABLE reviews (
   id SERIAL,
   username varchar(100) default '' NOT NULL,
