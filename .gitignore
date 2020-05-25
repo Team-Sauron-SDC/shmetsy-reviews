@@ -24,9 +24,12 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
+data/
+build.js
+report.json
 
 /.env
-/server/sqlconfig.js
+sqlconfig.js
 /public/bundle.js
 /awscliv2.zip
 /aws/install
