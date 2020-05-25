@@ -29,6 +29,7 @@ app.post('/api/reviews/', (req, res) => {
 });
 
 app.get('/api/reviews/:id', (req, res) => {
+  console.log('attempting to retreive data');
   const { id } = req.params;
   db.readProductReviews(id, (err, data) => {
     // data should be an array of reviews of product ${id}
@@ -37,7 +38,7 @@ app.get('/api/reviews/:id', (req, res) => {
       res.end();
       console.log(err);
     } else {
-      const shop = data[0].shopid;
+      const shop = data[0] ? data[0].shopid : 1;
       db.readShopReviews(shop, (shopErr, results) => {
         if (shopErr) {
           res.status(404);

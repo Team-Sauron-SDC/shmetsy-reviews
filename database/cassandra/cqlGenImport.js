@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 /* eslint-disable no-console */
 const fs = require('fs');
 const faker = require('faker');
@@ -70,7 +71,7 @@ connectAndCreate()
   .then(() => {
     dataGen(writeData, 'utf-8', () => {
       writeData.end();
-      client.execute('COPY reviews(username, rating, reviewdate, review, productid, shopid) FROM \'/Users/carlitoswillis/local/hr/sdc-system-design-capstone/reviews/data.csv\' DELIMITER \',\' CSV HEADER', (err) => {
+      client.execute(`COPY reviews(username, rating, reviewdate, review, productid, shopid) FROM '/data/data.csv' DELIMITER ',' CSV HEADER`, (err) => {
         if (err) {
           console.log(err);
         } else {

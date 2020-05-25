@@ -24,6 +24,7 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 dist/
+data/
 build.js
 report.json
 

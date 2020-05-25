@@ -1,39 +1,29 @@
 /* eslint-disable no-console */
 /* eslint-disable no-multi-str */
-const { Pool } = require('pg');
+const pool = require('./pgConfig');
 
-let pool = new Pool({
-  user: process.env.POSTGRES_USER || 'postgres',
-  host: process.env.POSTGRES_PASSWORD ? 'db' : 'localhost',
-  password: process.env.POSTGRES_PASSWORD || '',
-  port: 5432,
-});
-
-pool.query('CREATE DATABASE reviewsdb', (reviewsdb) => {
-  if (reviewsdb) {
-    console.log('reviewsdb exists');
+pool.query(`CREATE TABLE IF NOT EXISTS reviews(id SERIAL,
+  username varchar(100) default '' NOT NULL,
+  rating integer,
+  reviewdate DATE NOT NULL,
+  review varchar(500) default '' NOT NULL,
+  productid integer default 0 NOT NULL,
+  shopid integer default 1 NOT NULL,
+  PRIMARY KEY (id, productid, shopid))`, (err) => {
+  if (err) {
+    console.log(err);
   } else {
-    console.log('db created!');
+    console.log('table created');
   }
-  pool = new Pool({
-    user: process.env.POSTGRES_USER || 'postgres',
-    host: process.env.POSTGRES_PASSWORD ? 'db' : 'localhost',
-    password: process.env.POSTGRES_PASSWORD || '',
-    port: 5432,
-    database: 'reviewsdb',
-  });
-  pool.query(`CREATE TABLE IF NOT EXISTS reviews(id SERIAL PRIMARY KEY,
-    username varchar(100) default '' NOT NULL,
-    rating integer,
-    reviewDate DATE NOT NULL,
-    review varchar(500) default '' NOT NULL,
-    productID integer default 0 NOT NULL,
-    shopID integer default 1 NOT NULL)`, (err) => {
-    if (err) {
-      console.log('reviews table exists');
-    }
-  });
 });
+
+// pool.query('CREATE DATABASE reviewsdb', (reviewsdb) => {
+//   if (reviewsdb) {
+//     console.log('reviewsdb exists');
+//   } else {
+//     console.log('db created!');
+//   }
+// });
 
 const readProductReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where productid = ${id}`;

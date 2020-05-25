@@ -3,26 +3,29 @@ version: '3'
 services:
   db:
     build: .
-    # environment:
-    #   MYSQL_DATABASE: reviewList
-    #   MYSQL_ROOT_PASSWORD: supersecret
-    #   MYSQL_USER: mysql
-    #   MYSQL_ROOT_PASSWORD: supersecret
-    #   DATABASE_HOST: localhost
+    volumes:
+      - pg:/var/lib/cassandra/data
+      - data:/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
     ports:
-      - "9042:9042"
+      - "9402:9402"
   server:
     build: ../../
-    # environment:
-    #   MYSQL_PORT: 3306
-    #   MYSQL_DATABASE: reviewList
-    #   MYSQL_USERTWO: root
-    #   MYSQL_PASSWORD: supersecret
-    #   DATABASE_HOST: localhost
+    volumes:
+      - pg:/var/lib/cassandra/data
+      - data:/usr/src/app/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
     ports:
       - "5000:5000"
-    links:
-      - db:db
     depends_on:
       - db
     restart: on-failure
+volumes:
+  pg:
+    driver: local
+  data:
+    driver: local
