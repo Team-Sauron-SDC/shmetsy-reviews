@@ -48,11 +48,11 @@ const readShopReviews = (id, callback) => {
 };
 
 const createReviews = (entry, callback) => {
-  const queryStr = 'INSERT INTO reviews (username,rating,reviewDate,review,productID,shopID) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
+  const queryStr = 'INSERT INTO reviews (username,rating,reviewdate,review,productid,shopid) VALUES ($1,$2,$3,$4,$5,$6) RETURNING *';
   const {
-    username, rating, reviewDate, review, productID, shopID,
+    username, rating, reviewdate, review, productid, shopid,
   } = entry;
-  const params = [username, rating, reviewDate, review, productID, shopID];
+  const params = [username, rating, reviewdate, review, productid, shopid];
   pool.query(queryStr, params, (err, result) => {
     if (err) {
       callback(err);
