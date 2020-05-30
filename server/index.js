@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
-
+require('newrelic');
 const {
   env, express, path, bodyParser, cors, mysql, config, db,
 } = require('./imports');

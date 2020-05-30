@@ -2,27 +2,28 @@
 /* eslint-disable no-multi-str */
 const cassandra = require('cassandra-driver');
 
-const tempClient = new cassandra.Client({ contactPoints: ['db'], localDataCenter: 'datacenter1', keyspace: 'system' });
-const client = new cassandra.Client({ contactPoints: ['db'], localDataCenter: 'datacenter1', keyspace: 'sauron_sdc' });
+const tempClient = new cassandra.Client({ contactPoints: ['cassandra_db_1'], localDataCenter: 'datacenter1', keyspace: 'system' });
+const client = new cassandra.Client({ contactPoints: ['cassandra_db_1'], localDataCenter: 'datacenter1', keyspace: 'reviewsdb' });
 tempClient.connect()
   .then(() => {
-    const create = "CREATE KEYSPACE IF NOT EXISTS sauron_sdc WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' }AND DURABLE_WRITES =  true;";
+    const create = "CREATE KEYSPACE IF NOT EXISTS reviewsdb WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : '1' }";
     return tempClient.execute(create);
   })
   .then(() => {
     client.connect((err) => (err ? console.log('There was an ERROR', err) : console.log('Connected to Cassandra!')));
   })
   .then(() => {
-    const createTable = 'CREATE TABLE IF NOT EXISTS sauron_sdc.reviews (id int, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY(id, shopID, productID))';
+    const createTable = 'CREATE TABLE IF NOT EXISTS reviewsdb.reviews_by_shopid (id timeuuid, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY((shopid), id, productid))';
     return client.execute(createTable);
   })
   .then(() => {
-    // create index on -> id? productid?, shopID?
+    const createTable = 'CREATE TABLE IF NOT EXISTS reviewsdb.reviews_by_productid (id timeuuid, username text, rating int, reviewdate text, review text, productid int, shopid int, PRIMARY KEY((productid), id, shopid))';
+    return client.execute(createTable);
   })
   .catch((err) => console.log('Cannot Connect to Cassandra!', err));
 
 const readProductReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews where productid = ${id}`;
+  const queryStr = `SELECT * from reviewsdb.reviews_by_productid where productid = ${id}`;
   client.execute(queryStr, (err, results) => {
     if (err || results.length === 0) {
       callback(err || 'empty set');
@@ -33,7 +34,7 @@ const readProductReviews = (id, callback) => {
 };
 
 const readShopReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
+  const queryStr = `SELECT * from reviewsdb.reviews_by_shopid WHERE shopid = ${id}`;
   client.execute(queryStr, (err, results) => {
     if (err) {
       callback(err);
