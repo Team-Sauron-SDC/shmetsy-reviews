@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, '/../public')));
 app.use('/:id', express.static(`${__dirname}/../public`));
 app.use(bodyParser.json());
 
-const port = 5000;
+const port = 80;
 app.listen(port, () => console.log(`App is listening at http://localhost:${port}`));
 
 app.post('/api/reviews/', (req, res) => {
