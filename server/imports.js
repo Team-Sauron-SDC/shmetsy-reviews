@@ -6,7 +6,7 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-// const db = require('../database/index.js');
+const db = require('../database/index.js');
 
 module.exports = {
   env, express, path, bodyParser, cors, /* db, */
