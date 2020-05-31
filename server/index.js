@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 require('newrelic');
 const {
-  env, express, path, bodyParser, cors, mysql, config, db,
+  env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
 const app = express();
