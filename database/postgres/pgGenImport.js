@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const fs = require('fs');
 const faker = require('faker');
-
+const env = require('dotenv').config();
 const start = new Date();
 
 const gen = () => {
@@ -19,8 +19,8 @@ const gen = () => {
 };
 
 const dataGen = (writer, encoding, callback) => {
-  let i = 3000;
-  let productid = 1;
+  let i = 5000000;
+  let productid = 8333333;
   function write() {
     let ok = true;
     do {
@@ -45,11 +45,11 @@ const dataGen = (writer, encoding, callback) => {
 };
 
 const { Pool } = require('pg');
-
+console.log(process.env.DB_USER);
 let pool = new Pool({
-  user: process.env.POSTGRES_USER || 'postgres',
-  host: process.env.POSTGRES_PASSWORD ? 'db' : 'localhost',
-  password: process.env.POSTGRES_PASSWORD || '',
+  user: process.env.DB_USER || 'postgres',
+  host: process.env.DB_HOST || 'localhost',
+  password: process.env.DB_PASSWORD || '',
   port: 5432,
 });
 
@@ -60,9 +60,9 @@ pool.query('CREATE DATABASE reviewsdb', (reviewsdb) => {
     console.log('db created!');
   }
   pool = new Pool({
-    user: process.env.POSTGRES_USER || 'postgres',
-    host: process.env.POSTGRES_PASSWORD ? 'postgres_db_1' : 'localhost',
-    password: process.env.POSTGRES_PASSWORD || '',
+    user: process.env.DB_USER || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
+    password: process.env.DB_PASSWORD || '',
     port: 5432,
     database: 'reviewsdb',
   });
