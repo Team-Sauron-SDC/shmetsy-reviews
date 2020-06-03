@@ -3,19 +3,19 @@
 /* eslint-disable no-unused-vars */
 require('newrelic');
 const redis = require('redis');
-const cluster = require('cluster');
+// const cluster = require('cluster');
 const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
 const client = redis.createClient();
 
-if (cluster.isMaster) {
-  console.log('this is a master');
-  cluster.fork();
-  cluster.fork();
-} else {
-  console.log('this is a worker');
+// if (cluster.isMaster) {
+//   console.log('this is a master');
+//   cluster.fork();
+//   cluster.fork();
+// } else {
+//   console.log('this is a worker');
   const app = express();
 
   app.use(cors());
@@ -133,4 +133,4 @@ if (cluster.isMaster) {
       res.end();
     });
   });
-}
+// }
