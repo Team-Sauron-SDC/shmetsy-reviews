@@ -64,7 +64,7 @@ if (cluster.isMaster) {
   const getCachedShop = (data, req, res) => {
     // Check the cache data from the server redis
     const shopid = data[0] ? data[0].shopid : 1;
-    redis.get(`shopid: {${shopid}`, (err, result) => {
+    redis.get(`shopid: ${shopid}`, (err, result) => {
       if (result) {
         result = JSON.parse(result);
         console.log('cached shop retrieved');
