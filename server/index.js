@@ -64,6 +64,7 @@ if (cluster.isMaster) {
     const shopid = data[0] ? data[0].shopid : 1;
     client.get(`{${shopid}`, (err, result) => {
       if (result) {
+        console.log('cached shop retrieved');
         const ids = new Set(data.map((review) => review.id));
         let unsorted = new Set([...data]);
         for (let i = 0; i < result.length; i += 1) {
@@ -99,6 +100,7 @@ if (cluster.isMaster) {
     const { id } = req.params;
     client.get(`{${id}`, (err, result) => {
       if (result) {
+        console.log('cached products retrieved');
         // res.send(result);
         getCachedShop(result, req, res);
       } else {
