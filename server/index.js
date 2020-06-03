@@ -4,6 +4,7 @@
 require('newrelic');
 const Redis = require('ioredis');
 const cluster = require('cluster');
+const compression = require('compression');
 const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
