@@ -6,6 +6,53 @@ const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
+const cluster = require('cluster');
+const redis = require('redis');
+const client = redis.createClient();
+
+if (cluster.isMaster) {
+  console.log('this is a master');
+  cluster.fork()
+  cluster.fork()
+  cluster.fork()
+  cluster.fork()
+  cluster.fork()
+} else {
+  console.log('this is a worker');
+
+/*
+var http = require('follow-redirects').http;
+var fs = require('fs');
+
+var options = {
+  'method': 'GET',
+  'hostname': '169.254.169.254',
+  'path': '/latest/meta-data/',
+  'headers': {
+  },
+  'maxRedirects': 20
+};
+
+var req = http.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function (chunk) {
+    var body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+
+  res.on("error", function (error) {
+    console.error(error);
+  });
+});
+
+req.end();
+
+*/
 const app = express();
 
 app.use(cors());
@@ -28,8 +75,24 @@ app.post('/api/reviews/', (req, res) => {
   });
 });
 
+app.get('/api/test/', (req, res) => {
+  console.log(cluster.worker.id)
+  res.end('cluster', cluster.worker.id);
+});
+
+const getCache = (id, res) => {
+  //Check the cache data from the server redis
+  client.get(id, (err, result) => {
+    if (result) {
+      res.send(result);
+    } else {
+      getBook(req, res);
+    }
+  });
+}
+
 app.get('/api/reviews/:id', (req, res) => {
-  console.log('attempting to retreive data');
+  console.log('handling request with worker', cluster.worker.id);
   const { id } = req.params;
   db.readProductReviews(id, (err, data) => {
     // data should be an array of reviews of product ${id}
@@ -86,3 +149,4 @@ app.delete('/api/reviews/:id', (req, res) => {
     res.end();
   });
 });
+}
