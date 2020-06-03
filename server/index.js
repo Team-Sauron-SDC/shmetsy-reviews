@@ -12,7 +12,7 @@ const {
 
 const redis = new Redis();
 
-const log = () => bunyan.createLogger({ name: 'production', level: 'info' })();
+const log = () => bunyan.createLogger({ name: 'production', level: 'info' }).info;
 
 if (cluster.isMaster) {
   log('this is a master');
