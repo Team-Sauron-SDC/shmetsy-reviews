@@ -2,13 +2,13 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 require('newrelic');
-const redis = require('redis');
+const Redis = require('ioredis');
 const cluster = require('cluster');
 const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
-const client = redis.createClient();
+const redis = new Redis();
 
 if (cluster.isMaster) {
   console.log('this is a master');
@@ -46,6 +46,7 @@ if (cluster.isMaster) {
         res.end();
         console.log(shopErr);
       } else {
+        redis.set(`shopid: ${shop}`, results);
         const ids = new Set(data.map((review) => review.id));
         let unsorted = new Set([...data]);
         for (let i = 0; i < results.length; i += 1) {
@@ -62,7 +63,7 @@ if (cluster.isMaster) {
   const getCachedShop = (data, req, res) => {
     // Check the cache data from the server redis
     const shopid = data[0] ? data[0].shopid : 1;
-    client.get(`{${shopid}`, (err, result) => {
+    redis.get(`shopid: {${shopid}`, (err, result) => {
       if (result) {
         console.log('cached shop retrieved');
         const ids = new Set(data.map((review) => review.id));
@@ -89,6 +90,7 @@ if (cluster.isMaster) {
         res.end();
         console.log(err);
       } else {
+        redis.set(`productid: ${id}`, data);
         getCachedShop(data, req, res);
       }
     });
@@ -98,7 +100,7 @@ if (cluster.isMaster) {
   const getCachedProducts = (req, res) => {
     // Check the cache data from the server redis
     const { id } = req.params;
-    client.get(`{${id}`, (err, result) => {
+    redis.get(`productid: ${id}`, (err, result) => {
       if (result) {
         console.log('cached products retrieved');
         // res.send(result);
