@@ -46,7 +46,8 @@ if (cluster.isMaster) {
         res.end();
         console.log(shopErr);
       } else {
-        redis.set(`shopid: ${shop}`, results);
+        redis.set(`shopid: ${shop}`, results)
+          .catch((e) => console.log(e));
         const ids = new Set(data.map((review) => review.id));
         let unsorted = new Set([...data]);
         for (let i = 0; i < results.length; i += 1) {
@@ -93,7 +94,8 @@ if (cluster.isMaster) {
         res.end();
         console.log(err);
       } else {
-        redis.set(`productid: ${id}`, data);
+        redis.set(`productid: ${id}`, data)
+          .catch((e) => console.log(e));
         getCachedShop(data, req, res);
       }
     });
