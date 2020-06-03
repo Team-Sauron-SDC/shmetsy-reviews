@@ -79,7 +79,10 @@ if (cluster.isMaster) {
       } else {
         getShopReviews(data, req, res);
       }
-    });
+    })
+      .catch((err) => {
+        getShopReviews(req, res);
+      });
   };
   const getProductReviews = (req, res) => {
     const { id } = req.params;
@@ -108,7 +111,10 @@ if (cluster.isMaster) {
       } else {
         getProductReviews(req, res);
       }
-    });
+    })
+      .catch((err) => {
+        getProductReviews(req, res);
+      });
   };
 
   app.get('/api/reviews/:id', getCachedProducts);
