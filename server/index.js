@@ -18,7 +18,7 @@ if (cluster.isMaster) {
 } else {
   console.log('this is a worker');
   const app = express();
-
+  app.use(compression());
   app.use(cors());
   app.use(express.static(path.join(__dirname, '/../public')));
   app.use('/:id', express.static(`${__dirname}/../public`));
