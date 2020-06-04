@@ -31,10 +31,10 @@ const dataGen = (writerOne, writerTwo, encoding, callback) => {
         productid += 1;
       }
       const entry = gen();
-      let data = `${i}, ${entry.username}, ${entry.rating}, ${entry.reviewdate}, ${entry.review}, ${productid}, ${shopid}`;
-      shop.push(data);
-      const shopStr = JSON.stringify(shop).replace('[', '{').replace(']', '}');
-      const shopData = `${shopid}, ${shopStr}\n`;
+      entry.id = i;
+      let data = `${entry.id}, ${entry.username}, ${entry.rating}, ${entry.reviewdate}, ${entry.review}, ${productid}, ${shopid}`;
+      shop.push(entry);
+      const shopData = `${shopid}, ${JSON.stringify(shop)}\n`;
       data = `${data}\n`;
       if (i === 0) {
         writerOne.write(data, encoding, callback);
