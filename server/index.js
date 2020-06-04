@@ -110,6 +110,7 @@ const getProductReviews = (req, res) => {
 
 const getCachedProducts = (req, res) => {
   // Check the cache data from the server redis
+  log.info('getting');
   const { id } = req.params;
   redis.get(`productid: ${id}`, (err, result) => {
     if (result) {
@@ -124,6 +125,14 @@ const getCachedProducts = (req, res) => {
       getProductReviews(req, res);
     });
 };
+
+app.get('/api/test/:id', (req, res) => {
+  const { id } = req.params;
+  db.readReview(id, (err, result) => {
+    if (err) log.info(err);
+    res.send(result);
+  });
+});
 
 app.get('/api/reviews/:id', getCachedProducts);
 

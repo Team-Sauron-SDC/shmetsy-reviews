@@ -25,6 +25,17 @@ pool.query(`CREATE TABLE IF NOT EXISTS reviews(id SERIAL,
 //   }
 // });
 
+const readReview = (id, callback) => {
+  const queryStr = `SELECT * from reviews where id = ${id}`;
+  pool.query(queryStr, (err, results) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
 const readProductReviews = (id, callback) => {
   const queryStr = `SELECT * from reviews where productid = ${id}`;
   pool.query(queryStr, (err, results) => {
@@ -92,5 +103,5 @@ const deleteReview = (id, callback) => {
 };
 
 module.exports = {
-  createReviews, readProductReviews, readShopReviews, updateReview, deleteReview,
+  createReviews, readProductReviews, readShopReviews, updateReview, deleteReview, readReview,
 };
