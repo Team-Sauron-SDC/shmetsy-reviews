@@ -26,8 +26,8 @@ const log = bunyan.createLogger({ name: 'production' });
 const app = express();
 app.use(compression());
 app.use(cors());
-// app.use(express.static(path.join(__dirname, '/../public')));
-// app.use('/:id', express.static(`${__dirname}/../public`));
+app.use(express.static(path.join(__dirname, '/../public')));
+app.use('/:id', express.static(`${__dirname}/../public`));
 app.use(bodyParser.json());
 
 const port = 80;
