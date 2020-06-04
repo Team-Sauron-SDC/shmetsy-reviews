@@ -10,7 +10,7 @@ pool.query(`CREATE TABLE IF NOT EXISTS reviewsbyproduct(id SERIAL,
   review varchar(500) default '' NOT NULL,
   productid integer default 0 NOT NULL,
   shopid integer default 1 NOT NULL,
-  PRIMARY KEY (productid, shopid, id))`, (err) => {
+  PRIMARY KEY (productid, id))`, (err) => {
   if (err) {
     console.log(err);
   } else {
@@ -25,7 +25,7 @@ pool.query(`CREATE TABLE IF NOT EXISTS reviewsbyshop(id SERIAL,
   review varchar(500) default '' NOT NULL,
   productid integer default 0 NOT NULL,
   shopid integer default 1 NOT NULL,
-  PRIMARY KEY (shopid, productid, id))`, (err) => {
+  PRIMARY KEY (shopid, id))`, (err) => {
   if (err) {
     console.log(err);
   } else {
