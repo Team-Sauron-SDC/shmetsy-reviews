@@ -27,7 +27,6 @@ dist/
 data/
 build.js
 report.json
-newrelic.js
 
 /.env
 sqlconfig.js
