@@ -2,14 +2,29 @@
 /* eslint-disable no-multi-str */
 const pool = require('./pgConfig');
 
-pool.query(`CREATE TABLE IF NOT EXISTS reviews(id SERIAL,
+pool.query(`CREATE TABLE IF NOT EXISTS reviewsbyproduct(id SERIAL,
   username varchar(100) default '' NOT NULL,
   rating integer,
   reviewdate DATE NOT NULL,
   review varchar(500) default '' NOT NULL,
   productid integer default 0 NOT NULL,
   shopid integer default 1 NOT NULL,
-  PRIMARY KEY (id, productid, shopid))`, (err) => {
+  PRIMARY KEY (productid, shopid, id))`, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('table created');
+  }
+});
+
+pool.query(`CREATE TABLE IF NOT EXISTS reviewsbyshop(id SERIAL,
+  username varchar(100) default '' NOT NULL,
+  rating integer,
+  reviewdate DATE NOT NULL,
+  review varchar(500) default '' NOT NULL,
+  productid integer default 0 NOT NULL,
+  shopid integer default 1 NOT NULL,
+  PRIMARY KEY (shopid, productid, id))`, (err) => {
   if (err) {
     console.log(err);
   } else {
@@ -37,7 +52,7 @@ const readReview = (id, callback) => {
 };
 
 const readProductReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews where productid = ${id}`;
+  const queryStr = `SELECT * from reviewsbyproduct where productid = ${id}`;
   pool.query(queryStr, (err, results) => {
     if (err || results.length === 0) {
       callback(err || 'empty set');
@@ -48,7 +63,7 @@ const readProductReviews = (id, callback) => {
 };
 
 const readShopReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
+  const queryStr = `SELECT * from reviewsbyshop WHERE shopid = ${id}`;
   pool.query(queryStr, (err, results) => {
     if (err) {
       callback(err);
