@@ -34,7 +34,7 @@ const dataGen = (writerOne, writerTwo, encoding, callback) => {
       entry.id = i;
       let data = `${entry.id}, ${entry.username}, ${entry.rating}, ${entry.reviewdate}, ${entry.review}, ${productid}, ${shopid}`;
       shop.push(JSON.stringify(entry).split(',').join('_'));
-      const shopStr = shop.join('-');
+      const shopStr = shop.join('_');
       const shopData = `${shopid}, ${shopStr}\n`;
       data = `${data}\n`;
       if (i === 0) {
