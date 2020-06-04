@@ -10,8 +10,8 @@ const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
-const redis = new Redis();
 const redisOn = false;
+const redis = redisOn ? new Redis() : () => {};
 
 const log = bunyan.createLogger({ name: 'production' });
 // log.info('Hello!');
@@ -71,26 +71,30 @@ const getShopReviews = (data, req, res) => {
 const getCachedShop = (data, req, res) => {
   // Check the cache data from the server redis
   const shopid = data[0] ? data[0].shopid : 1;
-  redis.get(`shopid: ${shopid}`, (err, result) => {
-    if (redisOn && result) {
-      result = JSON.parse(result);
-      const ids = new Set(data.map((review) => review.id));
-      let unsorted = new Set([...data]);
-      for (let i = 0; i < result.length; i += 1) {
-        if (!ids.has(result[i].id)) {
-          unsorted.add(result[i]);
+  if (redisOn) {
+    redis.get(`shopid: ${shopid}`, (err, result) => {
+      if (result) {
+        result = JSON.parse(result);
+        const ids = new Set(data.map((review) => review.id));
+        let unsorted = new Set([...data]);
+        for (let i = 0; i < result.length; i += 1) {
+          if (!ids.has(result[i].id)) {
+            unsorted.add(result[i]);
+          }
         }
+        unsorted = Array.from(unsorted);
+        const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
+        res.status(200).send(sorted);
+      } else {
+        getShopReviews(data, req, res);
       }
-      unsorted = Array.from(unsorted);
-      const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
-      res.status(200).send(sorted);
-    } else {
-      getShopReviews(data, req, res);
-    }
-  })
-    .catch((err) => {
-      getShopReviews(req, res);
-    });
+    })
+      .catch((err) => {
+        getShopReviews(req, res);
+      });
+  } else {
+    getShopReviews(data, req, res);
+  }
 };
 const getProductReviews = (req, res) => {
   const { id } = req.params;
@@ -115,9 +119,9 @@ const getCachedProducts = (req, res) => {
   const { id } = req.params;
   if (id === 'nan') {
     res.end('pick a product');
-  } else {
+  } else if (redisOn) {
     redis.get(`productid: ${id}`, (err, result) => {
-      if (redisOn && result) {
+      if (result) {
         result = JSON.parse(result);
         // res.send(result);
         getCachedShop(result, req, res);
@@ -128,6 +132,8 @@ const getCachedProducts = (req, res) => {
       .catch((err) => {
         getProductReviews(req, res);
       });
+  } else {
+    getProductReviews(req, res);
   }
 };
 
