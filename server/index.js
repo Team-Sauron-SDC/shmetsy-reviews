@@ -127,6 +127,7 @@ const getCachedProducts = (req, res) => {
 };
 
 app.get('/api/test/:id', (req, res) => {
+  log.info('test getting');
   const { id } = req.params;
   db.readReview(id, (err, result) => {
     if (err) log.info(err);
