@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-multi-str */
+
 const pool = require('./pgConfig');
 
 pool.query(`CREATE TABLE IF NOT EXISTS reviewsbyproduct(id SERIAL,
