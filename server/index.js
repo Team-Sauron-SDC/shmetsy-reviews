@@ -11,7 +11,7 @@ const {
 } = require('./imports');
 
 const redis = new Redis();
-const redisOn = false;
+const redisOn = true;
 
 const log = bunyan.createLogger({ name: 'production' });
 // log.info('Hello!');
