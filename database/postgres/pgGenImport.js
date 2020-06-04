@@ -33,7 +33,8 @@ const dataGen = (writerOne, writerTwo, encoding, callback) => {
       const entry = gen();
       let data = `${i}, ${entry.username}, ${entry.rating}, ${entry.reviewdate}, ${entry.review}, ${productid}, ${shopid}`;
       shop.push(data);
-      const shopData = `${shopid}, ${JSON.stringify(shop)}\n`;
+      const shopStr = JSON.stringify(shop).replace('[', '{').replace(']', '}');
+      const shopData = `${shopid}, ${shopStr}\n`;
       data = `${data}\n`;
       if (i === 0) {
         writerOne.write(data, encoding, callback);
