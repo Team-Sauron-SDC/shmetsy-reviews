@@ -18,7 +18,7 @@ const gen = () => {
 };
 
 const dataGen = (writerOne, writerTwo, encoding, callback) => {
-  let i = 30000;
+  let i = 300;
   let productid = 0;
   let shopid = 1;
   let shop = [];
@@ -33,8 +33,8 @@ const dataGen = (writerOne, writerTwo, encoding, callback) => {
       const entry = gen();
       entry.id = i;
       let data = `${entry.id}, ${entry.username}, ${entry.rating}, ${entry.reviewdate}, ${entry.review}, ${productid}, ${shopid}`;
-      shop.push(JSON.stringify(entry));
-      const shopStr = JSON.stringify(shop).replace('[', '{').replace(']', '}');
+      shop.push(JSON.stringify(entry).split(',').join('_'));
+      const shopStr = shop.join('-');
       const shopData = `${shopid}, ${shopStr}\n`;
       data = `${data}\n`;
       if (i === 0) {
@@ -42,7 +42,7 @@ const dataGen = (writerOne, writerTwo, encoding, callback) => {
         writerTwo.write(shopData, encoding, callback);
       } else {
         ok = writerOne.write(data, encoding);
-        if (i % 300 === 0) {
+        if (i % 6 === 0) {
           ok2 = writerTwo.write(shopData, encoding);
           shopid += 1;
           shop = [];
