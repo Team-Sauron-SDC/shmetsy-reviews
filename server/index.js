@@ -11,6 +11,7 @@ const {
 } = require('./imports');
 
 const redis = new Redis();
+const redisOn = false;
 
 const log = bunyan.createLogger({ name: 'production' });
 // log.info('Hello!');
@@ -71,7 +72,7 @@ const getCachedShop = (data, req, res) => {
   // Check the cache data from the server redis
   const shopid = data[0] ? data[0].shopid : 1;
   redis.get(`shopid: ${shopid}`, (err, result) => {
-    if (result) {
+    if (redisOn && result) {
       result = JSON.parse(result);
       const ids = new Set(data.map((review) => review.id));
       let unsorted = new Set([...data]);
@@ -113,7 +114,7 @@ const getCachedProducts = (req, res) => {
   log.info('getting');
   const { id } = req.params;
   redis.get(`productid: ${id}`, (err, result) => {
-    if (result) {
+    if (redisOn && result) {
       result = JSON.parse(result);
       // res.send(result);
       getCachedShop(result, req, res);
