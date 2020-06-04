@@ -18,7 +18,7 @@ const gen = () => {
 };
 
 const dataGen = (writerOne, writerTwo, encoding, callback) => {
-  let i = 100;
+  let i = 30000;
   let productid = 0;
   let shopid = 1;
   let shop = [];
@@ -33,15 +33,16 @@ const dataGen = (writerOne, writerTwo, encoding, callback) => {
       const entry = gen();
       entry.id = i;
       let data = `${entry.id}, ${entry.username}, ${entry.rating}, ${entry.reviewdate}, ${entry.review}, ${productid}, ${shopid}`;
-      shop.push(entry);
-      const shopData = `${shopid}, ${JSON.stringify(shop)}\n`;
+      shop.push(JSON.stringify(entry));
+      const shopStr = JSON.stringify(shop).replace('[', '{').replace(']', '}');
+      const shopData = `${shopid}, ${shopStr}\n`;
       data = `${data}\n`;
       if (i === 0) {
         writerOne.write(data, encoding, callback);
         writerTwo.write(shopData, encoding, callback);
       } else {
         ok = writerOne.write(data, encoding);
-        if (i % 4 === 0) {
+        if (i % 300 === 0) {
           ok2 = writerTwo.write(shopData, encoding);
           shopid += 1;
           shop = [];
