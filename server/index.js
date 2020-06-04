@@ -113,18 +113,22 @@ const getCachedProducts = (req, res) => {
   // Check the cache data from the server redis
   log.info('getting');
   const { id } = req.params;
-  redis.get(`productid: ${id}`, (err, result) => {
-    if (redisOn && result) {
-      result = JSON.parse(result);
-      // res.send(result);
-      getCachedShop(result, req, res);
-    } else {
-      getProductReviews(req, res);
-    }
-  })
-    .catch((err) => {
-      getProductReviews(req, res);
-    });
+  if (id === 'nan') {
+    res.end('pick a product');
+  } else {
+    redis.get(`productid: ${id}`, (err, result) => {
+      if (redisOn && result) {
+        result = JSON.parse(result);
+        // res.send(result);
+        getCachedShop(result, req, res);
+      } else {
+        getProductReviews(req, res);
+      }
+    })
+      .catch((err) => {
+        getProductReviews(req, res);
+      });
+  }
 };
 
 app.get('/api/test/:id', (req, res) => {
