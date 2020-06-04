@@ -64,7 +64,7 @@ const readProductReviews = (id, callback) => {
 };
 
 const readShopReviews = (id, callback) => {
-  const queryStr = `SELECT * from shop WHERE shopid = ${id}`;
+  const queryStr = `SELECT * from reviewsbyshop WHERE shopid = ${id} limit 20`;
   pool.query(queryStr, (err, results) => {
     if (err) {
       callback(err);

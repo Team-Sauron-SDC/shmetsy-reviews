@@ -10,7 +10,7 @@ const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
-const redisOn = false;
+const redisOn = true;
 const redis = redisOn ? new Redis() : () => {};
 
 const log = bunyan.createLogger({ name: 'production' });
