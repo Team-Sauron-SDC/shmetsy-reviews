@@ -53,24 +53,26 @@ const getShopReviews = (data, req, res) => {
   // log.info('shopping');
   db.readShopReviews(shop, (shopErr, results) => {
     if (shopErr) {
+      log.info(shopErr);
       res.status(404);
       res.end();
-      log.info(shopErr);
     } else {
       if (redisOn) {
         redis.set(`shopid: ${shop}`, JSON.stringify(results))
           .catch((e) => log.info(e));
       }
-      const ids = new Set(data.map((review) => review.id));
-      let unsorted = new Set([...data]);
-      for (let i = 0; i < results.length; i += 1) {
-        if (!ids.has(results[i].id)) {
-          unsorted.add(results[i]);
-        }
-      }
-      unsorted = Array.from(unsorted);
-      const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
-      res.status(200).send(sorted);
+      // const ids = new Set(data.map((review) => review.id));
+      // let unsorted = new Set([...data]);
+      // for (let i = 0; i < results.length; i += 1) {
+      //   if (!ids.has(results[i].id)) {
+      //     unsorted.add(results[i]);
+      //   }
+      // }
+      const all = results.concat(data);
+      // unsorted = Array.from(unsorted);
+      // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
+      // res.status(200).send(sorted);
+      res.status(200).send(all);
     }
   });
 };
@@ -81,16 +83,18 @@ const getCachedShop = (data, req, res) => {
     redis.get(`shopid: ${shopid}`, (err, result) => {
       if (result) {
         result = JSON.parse(result);
-        const ids = new Set(data.map((review) => review.id));
-        let unsorted = new Set([...data]);
-        for (let i = 0; i < result.length; i += 1) {
-          if (!ids.has(result[i].id)) {
-            unsorted.add(result[i]);
-          }
-        }
-        unsorted = Array.from(unsorted);
-        const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
-        res.status(200).send(sorted);
+        // const ids = new Set(data.map((review) => review.id));
+        // let unsorted = new Set([...data]);
+        // for (let i = 0; i < result.length; i += 1) {
+        //   if (!ids.has(result[i].id)) {
+        //     unsorted.add(result[i]);
+        //   }
+        // }
+        // unsorted = Array.from(unsorted);
+        // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
+        // res.status(200).send(sorted);
+        const all = results.concat(data);
+        res.status(200).send(all);
       } else {
         getShopReviews(data, req, res);
       }
