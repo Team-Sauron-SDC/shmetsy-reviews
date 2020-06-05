@@ -9,7 +9,7 @@ const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
-const redisOn = false;
+const redisOn = true;
 let redis;
 if (redisOn) {
   const Redis = require('ioredis');
