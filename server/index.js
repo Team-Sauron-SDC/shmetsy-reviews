@@ -71,8 +71,8 @@ const getShopReviews = (data, req, res) => {
       // unsorted = Array.from(unsorted);
       // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
       // res.status(200).send(sorted);
-      res.status(200)
-      res.end([...results, ...data]);
+      res.status(200);
+      res.end(JSON.stringify([...results, ...data]));
     }
   });
 };
