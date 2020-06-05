@@ -2,12 +2,12 @@ const path = require('path');
 
 module.exports = {
   watchOptions: {
-    ignored: /node_modules/
+    ignored: /node_modules/,
   },
-  mode: "development",
-  entry: "./client/index.jsx",
+  mode: 'production',
+  entry: './client/index.jsx',
   output: {
-    path: path.resolve(__dirname, "public"),
+    path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
   },
   module: {
@@ -19,9 +19,9 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
-            plugins: ['@babel/plugin-proposal-class-properties']
-          }
-        }
+            plugins: ['@babel/plugin-proposal-class-properties'],
+          },
+        },
       },
       {
         test: /\.css$/i,
@@ -29,7 +29,7 @@ module.exports = {
           'style-loader',
           'css-loader',
         ],
-      }
-    ]
+      },
+    ],
   },
 };

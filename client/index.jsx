@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReviewList from './components/ReviewList.jsx';
 
+var moduleLoc = require('./moduleLoc.jsx');
+
 
 class App extends React.Component {
   constructor(props) {
@@ -34,23 +36,17 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    let newPath = '';
-    for(var i = 0; i < window.location.pathname.length; i ++) {
-      if(window.location.pathname[i] !== "/") {
-        newPath += window.location.pathname[i];
-      }
-    }
+    let newPath = window.location.pathname.replace('/','').replace('/','');
     this.setState({
-      current: newPath,
+      current: Number(newPath),
     }, () => {
       this.getReviews();
     });
   }
 
   getReviews() {
-    axios.get(`/api/reviews/${this.state.current}`)
+    axios.get(`${moduleLoc}/api/reviews/${this.state.current}`)
       .then(res => {
-        console.log(res.data);
         this.setState({
           reviews: res.data,
           shopReviews: res.data,
