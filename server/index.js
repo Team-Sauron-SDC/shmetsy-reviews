@@ -12,7 +12,7 @@ const {
 
 const redisOn = false;
 // const redis = redisOn ? new Redis() : () => {};
-const redis = () => {};
+const redis = { set: () => {} };
 
 const log = bunyan.createLogger({ name: 'production' });
 // log.info('Hello!');
