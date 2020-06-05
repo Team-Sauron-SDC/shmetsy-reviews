@@ -103,6 +103,7 @@ const getCachedShop = (data, req, res) => {
 };
 const getProductReviews = (req, res) => {
   const { id } = req.params;
+  log.info('getting products');
   db.readProductReviews(id, (err, data) => {
     // data should be an array of reviews of product ${id}
     if (err) {
