@@ -50,6 +50,7 @@ app.post('/api/reviews/', (req, res) => {
 
 const getShopReviews = (data, req, res) => {
   const shop = data[0] ? data[0].shopid : 1;
+  log.info('shopping');
   db.readShopReviews(shop, (shopErr, results) => {
     if (shopErr) {
       res.status(404);
