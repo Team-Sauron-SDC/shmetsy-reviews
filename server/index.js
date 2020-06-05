@@ -56,8 +56,10 @@ const getShopReviews = (data, req, res) => {
       res.end();
       log.info(shopErr);
     } else {
-      redis.set(`shopid: ${shop}`, JSON.stringify(results))
-        .catch((e) => log.info(e));
+      if (redisOn) {
+        redis.set(`shopid: ${shop}`, JSON.stringify(results))
+          .catch((e) => log.info(e));
+      }
       const ids = new Set(data.map((review) => review.id));
       let unsorted = new Set([...data]);
       for (let i = 0; i < results.length; i += 1) {
