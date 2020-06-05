@@ -68,11 +68,10 @@ const getShopReviews = (data, req, res) => {
       //     unsorted.add(results[i]);
       //   }
       // }
-      const all = results.concat(data);
       // unsorted = Array.from(unsorted);
       // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
       // res.status(200).send(sorted);
-      res.status(200).send(all);
+      res.status(200).send([...results, ...data]);
     }
   });
 };
@@ -93,8 +92,7 @@ const getCachedShop = (data, req, res) => {
         // unsorted = Array.from(unsorted);
         // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
         // res.status(200).send(sorted);
-        const all = results.concat(data);
-        res.status(200).send(all);
+        res.status(200).send([...results, ...data]);
       } else {
         getShopReviews(data, req, res);
       }
