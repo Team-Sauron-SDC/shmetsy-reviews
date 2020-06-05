@@ -71,7 +71,8 @@ const getShopReviews = (data, req, res) => {
       // unsorted = Array.from(unsorted);
       // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
       // res.status(200).send(sorted);
-      res.status(200).send(JSON.stringify([...results, ...data]));
+      res.status(200)
+      res.end([...results, ...data]);
     }
   });
 };
@@ -92,7 +93,8 @@ const getCachedShop = (data, req, res) => {
         // unsorted = Array.from(unsorted);
         // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
         // res.status(200).send(sorted);
-        res.status(200).send(JSON.stringify([...result, ...data]));
+        res.status(200);
+        res.end([...result, ...data]);
       } else {
         getShopReviews(data, req, res);
       }
