@@ -94,7 +94,7 @@ const getCachedShop = (data, req, res) => {
         // const sorted = unsorted.sort((a, b) => b.reviewDate - a.reviewDate);
         // res.status(200).send(sorted);
         res.status(200);
-        res.end([...result, ...data]);
+        res.end(JSON.stringify([...result, ...data]));
       } else {
         getShopReviews(data, req, res);
       }
