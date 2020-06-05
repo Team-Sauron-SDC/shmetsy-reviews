@@ -4,6 +4,8 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReviewList from './components/ReviewList.jsx';
 
+const ip = 'http://54.219.182.134';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -48,7 +50,7 @@ class App extends React.Component {
   }
 
   getReviews() {
-    axios.get(`/api/reviews/${this.state.current}`)
+    axios.get(`${ip}/api/reviews/${this.state.current}`)
       .then(res => {
         console.log(res.data);
         this.setState({

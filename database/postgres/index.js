@@ -26,7 +26,7 @@ pool.query(`CREATE TABLE IF NOT EXISTS reviews(id SERIAL,
 // });
 
 const readProductReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews where productid = ${id}`;
+  const queryStr = `SELECT * from reviewsbyproduct where productid = ${id}`;
   pool.query(queryStr, (err, results) => {
     if (err || results.length === 0) {
       callback(err || 'empty set');
@@ -37,7 +37,7 @@ const readProductReviews = (id, callback) => {
 };
 
 const readShopReviews = (id, callback) => {
-  const queryStr = `SELECT * from reviews WHERE shopid = ${id}`;
+  const queryStr = `SELECT * from reviewsbyshop WHERE shopid = ${id} limit 20`;
   pool.query(queryStr, (err, results) => {
     if (err) {
       callback(err);
