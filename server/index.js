@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 require('newrelic');
-// const Redis = require('ioredis');
 const cluster = require('cluster');
 const compression = require('compression');
 const bunyan = require('bunyan');
@@ -11,8 +10,11 @@ const {
 } = require('./imports');
 
 const redisOn = false;
-// const redis = redisOn ? new Redis() : () => {};
-const redis = { set: () => {} };
+let redis;
+if (redisOn) {
+  const Redis = require('ioredis');
+  redis = redisOn ? new Redis() : () => {};
+}
 
 const log = bunyan.createLogger({ name: 'production' });
 // log.info('Hello!');
@@ -105,10 +107,12 @@ const getProductReviews = (req, res) => {
       res.status(404);
       res.end();
       log.info(err);
-    } else {
+    } else if (redisOn) {
       redis.set(`productid: ${id}`, JSON.stringify(data))
         .catch((e) => log.info(e));
       getCachedShop(data, req, res);
+    } else {
+      getShopReviews(data, req, res);
     }
   });
 };
@@ -147,7 +151,7 @@ app.get('/api/test/:id', (req, res) => {
   });
 });
 
-app.get('/api/reviews/:id', getCachedProducts);
+app.get('/api/reviews/:id', redisOn ? getCachedProducts : getProductReviews);
 
 app.patch('/api/reviews/:id', (req, res) => {
   const { id } = req.params;
