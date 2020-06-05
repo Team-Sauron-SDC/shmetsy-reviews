@@ -9,8 +9,8 @@ const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
-const redisOn = false;
 let redis;
+const redisOn = true;
 if (redisOn) {
   const Redis = require('ioredis');
   redis = redisOn ? new Redis() : () => {};
@@ -104,7 +104,7 @@ const getCachedShop = (data, req, res) => {
 };
 const getProductReviews = (req, res) => {
   const { id } = req.params;
-  log.info('getting products');
+  log.info(`getting reviews for product ${id}`);
   db.readProductReviews(id, (err, data) => {
     // data should be an array of reviews of product ${id}
     if (err) {
@@ -124,7 +124,7 @@ const getProductReviews = (req, res) => {
 
 const getCachedProducts = (req, res) => {
   // Check the cache data from the server redis
-  log.info('getting');
+  log.info('getting cached');
   const { id } = req.params;
   if (id === 'nan') {
     res.end('pick a product');
