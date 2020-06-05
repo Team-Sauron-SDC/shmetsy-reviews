@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 require('newrelic');
-const Redis = require('ioredis');
+// const Redis = require('ioredis');
 const cluster = require('cluster');
 const compression = require('compression');
 const bunyan = require('bunyan');
@@ -10,8 +10,9 @@ const {
   env, express, path, bodyParser, cors, db,
 } = require('./imports');
 
-const redisOn = true;
-const redis = redisOn ? new Redis() : () => {};
+const redisOn = false;
+// const redis = redisOn ? new Redis() : () => {};
+const redis = () => {};
 
 const log = bunyan.createLogger({ name: 'production' });
 // log.info('Hello!');
