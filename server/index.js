@@ -10,7 +10,7 @@ const {
 } = require('./imports');
 
 let redis;
-const redisOn = false;
+const redisOn = true;
 if (redisOn) {
   const Redis = require('ioredis');
   redis = redisOn ? new Redis() : () => {};
