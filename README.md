@@ -1,31 +1,47 @@
+# Ezzy Shop
+
+![Ezzy Logo](https://i.imgur.com/skGy7Wf.png)
+
 # Reviews
 
-> The reviews section contains all the reviews of different products– with details about the review, the reviewer, the product, and the shop
+> The reviews section / component renders all the reviews of different products– with details about the review, the reviewer, the product, and the shop
 
 ## Related Projects
 
-  - https://github.com/Team-Sauron-SDC/shmetsy-reviews-proxy
-  - https://github.com/Team-Sauron-SDC/Shmetsy-carousel
-  - https://github.com/Team-Sauron-SDC/Shmetsy-Info-Service
-  - https://github.com/Team-Sauron-SDC/shmetsy-suggested-service
+  - [Suggested](https://github.com/Team-Sauron-SDC/ezzy-shop-suggested-service)
+  - [Information](https://github.com/Team-Sauron-SDC/Shmetsy-Info-Service)
+  - [Carousel](https://github.com/Team-Sauron-SDC/Shmetsy-carousel)
 
 ## Table of Contents
 
 1. [Usage](#Usage)
-2. [Requirements](#requirements)
-3. [Development](#development)
+1. [Requirements](#requirements)
+1. [Development](#development)
 
-## Usage
+### Prerequisites
 
-> Some usage instructions
+```
+node 12.16.1
+PostgreSQL 12
+Redis 6.0
+```
 
-## Requirements
+### Getting Started
 
-- Node v12.16.1
-- Docker
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. If you need ipsum data, run the command - npm run seed, and copy the resulting csv into your test DB.
 
-## Development
+### Built With
 
+* [node.js](https://nodejs.org/en/)
+* [Express](https://expressjs.com/)
+* [React](https://reactjs.org/)
+
+To install PostgreSQL, please follow these [instructions](https://www.postgresql.org/download/linux/ubuntu/)
+To intall Redis, please follow these [instructions](https://redis.io/download)
+
+### Deployment
+
+This app was deployed using [Heroku](https://dashboard.heroku.com/)
 
 ### Installing Dependencies
 
@@ -36,14 +52,8 @@ npm install -g webpack
 npm install
 ```
 
-
-# Single Item Service
-This component renders the images for the products with zoom functionality
-
 ## Getting Started
 ```sh
-npm run seed
-or
 docker-compose up
 ```
 
@@ -56,8 +66,8 @@ npm run test
 ## Running server and client locally
 
 ```sh
-npm start
 npm run build
+npm start
 ```
 
 ## CRUD Operations
