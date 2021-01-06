@@ -15,7 +15,7 @@
     "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel": "^6.23.0",
     "body-parser": "^1.19.0",
     "bunyan": "^1.8.12",
